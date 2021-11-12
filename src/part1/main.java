@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
+import java.util.List;
 
 public class main {
 
@@ -15,7 +18,7 @@ public class main {
 		 * ####1 : READING DATA
 		 */
 
-		System.out.println("Reading dataset...");
+		System.out.println("\n Reading dataset...");
 
 		// Decalarations
 		int c = 0;
@@ -25,7 +28,7 @@ public class main {
 
 		// reading the file seeds_data.txt
 		BufferedReader bf = new BufferedReader(
-				new FileReader("C:\\Users\\soffi\\Documents\\GitHub\\DATAMINING\\ressources\\seeds_dataset.txt"));
+				new FileReader("C:\\Users\\soffi\\Documents\\GitHub\\DATAMINING\\ressources\\test.txt"));
 
 		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
 		String tmp_line = bf.readLine();
@@ -52,8 +55,15 @@ public class main {
 
 		// printing list
 		System.out.print(list_data);
-		System.out.println("Reading dataset ends ");
-
+		System.out.println("\n Reading dataset ends \n");
+		ArrayList <Double> example=new ArrayList<>();
+		ArrayList <Double> x=new ArrayList<>();
+		example.add(1.1);
+		example.add(0.4);
+		example.add(43.0);
+		ManipData m=new ManipData();
+		x=m.SortAttribute(example);
+		System.out.println("sorted data "+x);
 
 	}
 
