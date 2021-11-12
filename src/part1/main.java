@@ -56,15 +56,59 @@ public class main {
 		// printing list
 		System.out.print(list_data);
 		System.out.println("\n Reading dataset ends \n");
+		
+		
+		/*
+		 * test of all methods
+		 */
+		ManipData m=new ManipData();
 		ArrayList <Double> example=new ArrayList<>();
 		ArrayList <Double> x=new ArrayList<>();
+		
+		//trying  sorting method checked
 		example.add(1.1);
 		example.add(0.4);
 		example.add(43.0);
-		ManipData m=new ManipData();
+		
 		x=m.SortAttribute(example);
 		System.out.println("sorted data "+x);
+		
+		//trying add row method  : checked
+		list_data=m.addData(list_data,example);
+		System.out.println("add row to data "+list_data);
+		
+		
+		//trying alter rown with num att method : checked
+		list_data=m.AlterRowN(list_data,0,1, 0.0);
+		System.out.println("alter row having row index"+list_data);
 
+		
+		//trying get row given a pos : checked
+		x=m.GetRow(list_data,0);
+		System.out.println("get row having row index"+x);
+		
+		//trying get pos of row : checked
+		int y;
+		ArrayList<Double> temp= new ArrayList<>();
+		Double[] t = new Double[] {0.4, 1.1, 43.0};
+		temp.addAll(Arrays.asList(t));
+		y=m.GetPos(list_data,temp);
+		System.out.println("get pos having row "+(y+1));
+	
+		//trying rowexists method : checked
+		boolean b;
+		Double[] tt = new Double[] {0.4, 1.1};
+		temp.addAll(Arrays.asList(tt));
+		b=m.RowExists(list_data,temp);
+		System.out.println("existance "+b);
+		
+	
+		//trying drop method
+		ArrayList<Double> dropp= new ArrayList<>();
+		Double[] f = new Double[] {0.0, 14.84, 0.871, 5.763, 3.312, 2.221, 5.22, 1.0};
+		dropp.addAll(Arrays.asList(f));
+		list_data=m.DropData(list_data,dropp);
+		System.out.println("drop "+list_data);
 	}
 
 }

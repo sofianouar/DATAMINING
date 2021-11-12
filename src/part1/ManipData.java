@@ -44,20 +44,41 @@ public class ManipData {
 	 * functions
 	 */
 
-	// getting the position of a certain line of data in all dataList
-	public int GetRowPos(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		int pos = 0;
-		return pos;
+	// open file data
+	public ArrayList<ArrayList<Double>> openFile(String Otype) {
+		//not yet
+		switch (Otype) {
+		case "url":
+			// code block
+			break;
+		case "txtfile":
+			// code block
+			break;
+		case "csvfile":
+			// code block
+			break;
+		default:
+			// code block
+		}
+		return data;
 	}
 
 	// verifies if a line of data exists in the dataList
-	public boolean RowExists(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		boolean exist = false;
-
-		return exist;
+		public boolean RowExists(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
+			return data.contains(row);
+		}
+	
+	// getting the position of a certain line of data , NOTE : IT STARTS FROM 0
+	public int GetPos(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
+		
+		return data.indexOf(row);
+	}
+	
+	// getting the row data given the pos
+	public ArrayList<Double> GetRow(ArrayList<ArrayList<Double>> data, int index) {
+		return data.get(index);
 	}
 
-	// open file data
 
 	// add Data to dataList
 	public ArrayList<ArrayList<Double>> addData(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
@@ -69,29 +90,29 @@ public class ManipData {
 	public ArrayList<ArrayList<Double>> DropData(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
 		int tmp = 0;
 		if (RowExists(data, row)) {
-			tmp = GetRowPos(data, row);
+			tmp = GetPos(data, row);
 			data.remove(tmp);
 		}
 		return data;
 	}
 
-	// modify data having rowNumberN
-	public ArrayList<ArrayList<Double>> AlterRowN(ArrayList<ArrayList<Double>> data, int rownumber, int numAtt,double value) {
+	// modify data having rowNumberN : NOTE : THE USER GIVES INDEXES STARTING FROM 1
+	public ArrayList<ArrayList<Double>> AlterRowN(ArrayList<ArrayList<Double>> data, int rownumber, int numAtt,
+			double value) {
 		numAtt--;
-		ArrayList<Double> tmpRow=new ArrayList<>();
-		
-			
-			tmpRow=data.get(rownumber);
-			
-		
+		ArrayList<Double> tmpRow = new ArrayList<>();
+
+		data.get(rownumber).set(numAtt, value); /* the predefined set method replaces the index
+												numAtt with value  */
+
 		return data;
 	}
 
-	// modify data having row dataR
+	// modify data having row dataR : NOTE : THE USER GIVES INDEXES STARTING FROM 1
 	public ArrayList<ArrayList<Double>> AlterRowR(ArrayList<ArrayList<Double>> data, ArrayList<Double> row, int numAtt,
 			double value) {
 		numAtt--;
-
+      //not yet
 		return data;
 	}
 
