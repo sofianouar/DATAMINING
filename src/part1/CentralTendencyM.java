@@ -4,25 +4,66 @@ import java.util.ArrayList;
 
 public class CentralTendencyM {
 	ArrayList<Double> data;
-	int size;
+
+	/*
+	 * constructors
+	 */
+	public CentralTendencyM() {
+	}
 
 	public CentralTendencyM(ArrayList<Double> data) {
-	        this.data = data;
-	        this.size = data.size();
-	    }
+		this.data = data;
+	}
 
-//moyenne
-	public double Mean(ArrayList<Double> data) {
-		
+	/*
+	 * getters and setters
+	 */
+	public ArrayList<Double> getData() {
+		return data;
+	}
+
+	public void setData(ArrayList<Double> data) {
+		this.data = data;
+	}
+
+	
+	/*
+	 * functions
+	 */
+
+	// moyenne
+	public double GetMean(ArrayList<Double> data) {
+
 		return 0;
 	}
-// moyenne tronqué
+	
+	// moyenne tronqué
+	public double GetMeanTr(ArrayList<Double> data) {
 
-//médiane
+		return 0;
+	}
 	
-//mode 
+	//médiane
+	public double GetMedian(ArrayList<Double> data) {
+
+		return 0;
+	}
 	
-//milieu de l'étendue
+	//mode 
+	public double GetMode(ArrayList<Double> data) {
+
+		return 0;
+	}
 	
-//déduire les symétries
+	//milieu de l'étendue
+	public double GetEtendue(ArrayList<Double> data) {
+
+		return 0;
+	}
+	
+	//déduire les symétries
+	public double DedSym(ArrayList<Double> data) {
+
+		return 0;
+	}
 }
