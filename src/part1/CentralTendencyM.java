@@ -33,7 +33,7 @@ public class CentralTendencyM {
 
 	// moyenne
 	public double GetMean(ArrayList<Double> data) {
-
+		
 		return 0;
 	}
 	

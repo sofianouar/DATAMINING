@@ -151,4 +151,17 @@ public class ManipData {
 
 		return attributes;
 	}
+
+	public double GetMin(ArrayList<Double> data) {
+		data = SortAttribute(data);
+
+		return data.get(0);
+	}
+
+	public double GetMax(ArrayList<Double> data) {
+		data = SortAttribute(data);
+
+		return data.get(-1);
+	}
+
 }
