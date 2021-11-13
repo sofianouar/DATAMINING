@@ -33,11 +33,11 @@ public class main {
 		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
 		String tmp_line = bf.readLine();
 
-		// spliting a specific line to separate the attributes :
-		// one_line=[1,2,3,4,5,6,7,8]
-		// parsing one_line's values to double : [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]
-		// adding one_line to list_data :
-		// [[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]....]
+		/* spliting a specific line to separate the attributes :
+		* one_line=[1,2,3,4,5,6,7,8]
+		* parsing one_line's values to double : [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]
+		* adding one_line to list_data :
+		 *[[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]....] */
 
 		while (tmp_line != null) {
 			splitRow = tmp_line.split("\t+");
@@ -109,6 +109,15 @@ public class main {
 		dropp.addAll(Arrays.asList(f));
 		list_data=m.DropData(list_data,dropp);
 		System.out.println("drop "+list_data);
+		
+		//trying getattribute method2
+				ArrayList<Double> r= new ArrayList<>();
+				r=m.GetAttribute(list_data,0);
+				System.out.println("att  "+r);
+		//trying getattribute method
+		ArrayList<ArrayList<Double>> rr= new ArrayList<>();
+		rr=m.GetAttribute(list_data,0,1);
+		System.out.println("att 2 "+rr);		
 	}
 
 }

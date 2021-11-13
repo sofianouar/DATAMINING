@@ -16,6 +16,10 @@ public class ManipData {
 	public ManipData() {
 	}
 
+	public ManipData(ArrayList<ArrayList<Double>> data) {
+		this.data = data;
+	}
+
 	public ManipData(ArrayList<Double> row, ArrayList<ArrayList<Double>> data) {
 		this.row = row;
 		this.data = data;
@@ -46,7 +50,7 @@ public class ManipData {
 
 	// open file data
 	public ArrayList<ArrayList<Double>> openFile(String Otype) {
-		//not yet
+		// not yet
 		switch (Otype) {
 		case "url":
 			// code block
@@ -64,21 +68,21 @@ public class ManipData {
 	}
 
 	// verifies if a line of data exists in the dataList
-		public boolean RowExists(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-			return data.contains(row);
-		}
-	
-	// getting the position of a certain line of data , NOTE : IT STARTS FROM 0
+	public boolean RowExists(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
+		return data.contains(row);
+	}
+
+	// getting the position of a certain line of data , NOTE : value returned STARTS
+	// FROM 0
 	public int GetPos(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		
+
 		return data.indexOf(row);
 	}
-	
+
 	// getting the row data given the pos
 	public ArrayList<Double> GetRow(ArrayList<ArrayList<Double>> data, int index) {
 		return data.get(index);
 	}
-
 
 	// add Data to dataList
 	public ArrayList<ArrayList<Double>> addData(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
@@ -102,8 +106,9 @@ public class ManipData {
 		numAtt--;
 		ArrayList<Double> tmpRow = new ArrayList<>();
 
-		data.get(rownumber).set(numAtt, value); /* the predefined set method replaces the index
-												numAtt with value  */
+		data.get(rownumber).set(numAtt, value); /*
+												 * the predefined set method replaces the index numAtt with value
+												 */
 
 		return data;
 	}
@@ -112,7 +117,7 @@ public class ManipData {
 	public ArrayList<ArrayList<Double>> AlterRowR(ArrayList<ArrayList<Double>> data, ArrayList<Double> row, int numAtt,
 			double value) {
 		numAtt--;
-      //not yet
+		// not yet
 		return data;
 	}
 
@@ -120,5 +125,30 @@ public class ManipData {
 	public ArrayList<Double> SortAttribute(ArrayList<Double> row) {
 		Collections.sort(row);
 		return row;
+	}
+
+	// returns all values of a certain attribute in an arrayList
+	public ArrayList<Double> GetAttribute(ArrayList<ArrayList<Double>> data, int index) {
+		ArrayList<Double> attribute = new ArrayList<>();
+		for (int i = 0; i < data.size(); i++) {
+			attribute.add(data.get(i).get(index));
+		}
+		return attribute;
+	}
+
+	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,
+	// index1=att2)
+	public ArrayList<ArrayList<Double>> GetAttribute(ArrayList<ArrayList<Double>> data, int index1, int index2) {
+		ArrayList<Double> attribute1 = new ArrayList<>();
+		ArrayList<Double> attribute2 = new ArrayList<>();
+		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
+
+		attribute1 = GetAttribute(data, index1);
+		attribute2 = GetAttribute(data, index2);
+
+		attributes.add(attribute1);
+		attributes.add(attribute2);
+
+		return attributes;
 	}
 }
