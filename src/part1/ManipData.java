@@ -2,9 +2,13 @@ package part1;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ManipData {
 	ArrayList<Double> row;
@@ -47,6 +51,16 @@ public class ManipData {
 	/*
 	 * functions
 	 */
+	public void ListToFile(ArrayList<ArrayList<Double>> dataset) throws IOException {
+		FileWriter writer = new FileWriter("output.txt");
+		for (int k = 0; k < dataset.size(); k++) {
+			for (Double tmp : dataset.get(k)) {
+				writer.write(tmp + System.lineSeparator());
+			} writer.write("\n");
+		}
+		writer.close();
+		return;
+	}
 
 	// open file data
 	public ArrayList<ArrayList<Double>> openFile(String Otype) {
@@ -152,16 +166,39 @@ public class ManipData {
 		return attributes;
 	}
 
+	// gets minimum of an arraylist
 	public double GetMin(ArrayList<Double> data) {
-		data = SortAttribute(data);
 
-		return data.get(0);
+		return Collections.min(data);
 	}
 
+	// gets max of an arraylist
 	public double GetMax(ArrayList<Double> data) {
-		data = SortAttribute(data);
 
-		return data.get(-1);
+		return Collections.max(data);
+	}
+
+	// get frequence of all items : arraylist of vectors
+	// {[value1,freq1],[value2],freq2}
+	public ArrayList<ArrayList<Double>> GetFrequencies(ArrayList<Double> data) {
+
+		ArrayList<ArrayList<Double>> frequencies = new ArrayList<>();
+		ArrayList<Double> tuple = new ArrayList<Double>();
+		int freq;
+
+		for (int i = 0; i < data.size(); i++) {
+
+			freq = Collections.frequency(data, data.get(i));
+			tuple = new ArrayList<Double>();
+			tuple.add(data.get(i));
+			tuple.add(Double.valueOf(freq));
+			frequencies.add((ArrayList<Double>) (tuple));
+		}
+
+		Set<ArrayList<Double>> set = new LinkedHashSet<ArrayList<Double>>(frequencies);
+		// ArrayList<ArrayList<Double>> l = new ArrayList<>(set);
+
+		return new ArrayList<>(set);
 	}
 
 }
