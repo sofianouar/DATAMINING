@@ -200,12 +200,11 @@ public class ManipData {
 		return new ArrayList<>(set);
 	}
 
-	//resume of all values
+	// resume of all values
 	public ArrayList<Double> SetResume(double min, double q1, double q2, double q3, double max) {
 		ArrayList<Double> list = new ArrayList<>();
 		list.addAll(Arrays.asList(min, q1, q2, q3, max));
 		return list;
 	}
-	
-	
+
 }

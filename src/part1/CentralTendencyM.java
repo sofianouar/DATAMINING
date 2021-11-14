@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class CentralTendencyM {
 	public ArrayList<Double> data;
 	public ArrayList<ArrayList<Double>> dataset;
-
+	  
 	/*
 	 * constructors
 	 */
@@ -42,13 +42,18 @@ public class CentralTendencyM {
 	}
 
 	// trimmed moy
-	public double GetTrMean(ArrayList<Double> attribute) {
+	public double GetTrMean(ArrayList<Double> attribute, int pourcentage) {
 		double somme = 0;
-		for (int i = 1; i < attribute.size()-1; i++) {
+		//pourcentage=4, //4%
+		int k=attribute.size()*pourcentage/100; //nbre de val a supprimer de chaque extremite
+		//System.out.println(k);
+		data = ManipData.SortAttribute(data);
+		
+		for (int i = k; i < attribute.size()-k; i++) {
 			somme = somme + attribute.get(i);
-			System.out.println(somme);
+			
 		}
-		return Math.round((1 / (double) (attribute.size()-2) * somme) * 1e2) / 1e2;
+		return Math.round((1 / (double) (attribute.size()-2*k) * somme) * 1e2) / 1e2;
 	}
 
 	// médiane
