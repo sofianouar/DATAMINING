@@ -74,7 +74,6 @@ public class main {
 		example.add(1.1);
 		example.add(1.2);
 		example.add(1.3);
-		example.add(7.0);
 		example.add(1.5);
 		example.add(3.9);
 		example.add(3.0);

@@ -1,7 +1,6 @@
 package part1;
 
 import java.util.ArrayList;
-import java.text.DecimalFormat;
 
 public class CentralTendencyM {
 	public ArrayList<Double> data;
@@ -35,7 +34,6 @@ public class CentralTendencyM {
 	// moyenne
 	public double GetMean(ArrayList<Double> attribute) {
 		double somme = 0;
-		final DecimalFormat df = new DecimalFormat("0.00");
 		for (int i = 0; i < attribute.size(); i++) {
 			somme = somme + attribute.get(i);
 			System.out.println(somme);
@@ -44,10 +42,14 @@ public class CentralTendencyM {
 		return Math.round((1 / (double) attribute.size() * somme) * 1e2) / 1e2;
 	}
 
-	// moyenne tronqué
-	public double GetTrMean(ArrayList<Double> data) {
-
-		return Math.round((3) * 1e2) / 1e2;
+	// trimmed moy
+	public double GetTrMean(ArrayList<Double> attribute) {
+		double somme = 0;
+		for (int i = 1; i < attribute.size()-1; i++) {
+			somme = somme + attribute.get(i);
+			System.out.println(somme);
+		}
+		return Math.round((1 / (double) (attribute.size()-2) * somme) * 1e2) / 1e2;
 	}
 
 	// médiane
@@ -56,27 +58,29 @@ public class CentralTendencyM {
 		if (data.size() % 2 == 0)
 			return (data.get((data.size() / 2) - 1) + data.get(data.size() / 2)) / 2.0;
 
-		return Math.round((data.get(data.size() / 2)) * 1e2) / 1e2;
+		return data.get(data.size() / 2);
 	}
 
 	// mode
-	public Double GetMode(ArrayList<Double> data) {
-		int mode = 0;
-		ArrayList<ArrayList<Double>> tmp = ManipData.GetFrequencies(data);
-		ArrayList<Double> frequencies = new ArrayList<>();
-		frequencies = ManipData.GetAttribute(tmp, 1);
-		double maxVal = ManipData.GetMax(frequencies);
+	public ArrayList<Double> GetMode(ArrayList<Double> data) {
+		int cmode=0;
+		ArrayList<Double> mode = new ArrayList<>();
+		
 
 		// type de modalitee
-		if (mode == 1)
-			System.out.print(1);
-		if (mode == 2)
-			System.out.print(2);
-		if (mode == 3)
-			System.out.print(3);
-		else
-			System.out.print(0);
-		return data.get(0);
+		if (cmode== 1) //System.out.print("unimodal "+ 1);
+			mode.add(1.0);
+		
+		if (cmode == 2) //System.out.print("bimodale "+2);
+			mode.add(2.0);
+		
+		if (cmode == 3) //System.out.print("trimodale "+3);
+			mode.add(3.0);
+		
+		else //System.out.print("pas de mode "+0);
+			mode.add(0.0);
+		
+		return mode;
 	}
 
 	// l'étendue
@@ -92,8 +96,13 @@ public class CentralTendencyM {
 	}
 
 	// déduire les symétries
-	public double DedSym(ArrayList<Double> data) {
-
-		return 0;
+	public void DedSym(double mean, double median, double mode) {
+		if(mean==median & median==mode)
+			System.out.println("data is symetric");
+		if(mode<median & median<mean)
+			System.out.println("negatively skewed data ");
+		if(mean<median & median<mode)
+			System.out.println("positively skewed data ");
+		return;
 	}
 }
