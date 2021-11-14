@@ -36,7 +36,6 @@ public class CentralTendencyM {
 		double somme = 0;
 		for (int i = 0; i < attribute.size(); i++) {
 			somme = somme + attribute.get(i);
-			System.out.println(somme);
 		}
 
 		return Math.round((1 / (double) attribute.size() * somme) * 1e2) / 1e2;
@@ -65,7 +64,7 @@ public class CentralTendencyM {
 	public ArrayList<Double> GetMode(ArrayList<Double> data) {
 		int cmode=0;
 		ArrayList<Double> mode = new ArrayList<>();
-		
+		data = ManipData.SortAttribute(data);
 
 		// type de modalitee
 		if (cmode== 1) //System.out.print("unimodal "+ 1);

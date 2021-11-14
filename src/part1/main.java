@@ -136,15 +136,18 @@ public class main {
 		
 		//trying list of list to .txt file
 		 
-		m.ListToFile(dataset);
+
 		m.setData(dataset);
 		CentralTendencyM mm=new CentralTendencyM();
-		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median" +mm.GetMedian(example)+"midrange "+mm.GetMidRange(example));
-		System.out.println("ex "+example+" max " +m.GetMax(example)+ " min" +m.GetMin(example));
+		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median " + mm.GetMedian(example) +" midrange "+mm.GetMidRange(example));
+		System.out.println("ex "+example+" max " +m.GetMax(example)+ " min " +m.GetMin(example));
 		// trying sorting method checked
 		x = m.SortAttribute(example);
 		System.out.println("sorted data " + x);
-
+		m.ListToFile(dataset);
+		
+		
+		
 	}
 
 }
