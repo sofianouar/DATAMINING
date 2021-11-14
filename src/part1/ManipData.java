@@ -3,6 +3,7 @@ package part1;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -53,7 +54,8 @@ public class ManipData {
 		for (int k = 0; k < dataset.size(); k++) {
 			for (Double tmp : dataset.get(k)) {
 				writer.write(tmp + System.lineSeparator());
-			} writer.write("\n");
+			}
+			writer.write("\n");
 		}
 		writer.close();
 		return;
@@ -133,13 +135,13 @@ public class ManipData {
 	}
 
 	// Sort Data ascendently
-	public ArrayList<Double> SortAttribute(ArrayList<Double> row) {
+	public static ArrayList<Double> SortAttribute(ArrayList<Double> row) {
 		Collections.sort(row);
 		return row;
 	}
 
 	// returns all values of a certain attribute in an arrayList
-	public ArrayList<Double> GetAttribute(ArrayList<ArrayList<Double>> data, int index) {
+	public static ArrayList<Double> GetAttribute(ArrayList<ArrayList<Double>> data, int index) {
 		ArrayList<Double> attribute = new ArrayList<>();
 		for (int i = 0; i < data.size(); i++) {
 			attribute.add(data.get(i).get(index));
@@ -164,20 +166,20 @@ public class ManipData {
 	}
 
 	// gets minimum of an arraylist
-	public double GetMin(ArrayList<Double> data) {
+	public static double GetMin(ArrayList<Double> data) {
 
 		return Collections.min(data);
 	}
 
 	// gets max of an arraylist
-	public double GetMax(ArrayList<Double> data) {
+	public static double GetMax(ArrayList<Double> data) {
 
 		return Collections.max(data);
 	}
 
 	// get frequence of all items : arraylist of vectors
 	// {[value1,freq1],[value2],freq2}
-	public ArrayList<ArrayList<Double>> GetFrequencies(ArrayList<Double> data) {
+	public static ArrayList<ArrayList<Double>> GetFrequencies(ArrayList<Double> data) {
 
 		ArrayList<ArrayList<Double>> frequencies = new ArrayList<>();
 		ArrayList<Double> tuple = new ArrayList<Double>();
@@ -198,4 +200,12 @@ public class ManipData {
 		return new ArrayList<>(set);
 	}
 
+	//resume of all values
+	public ArrayList<Double> SetResume(double min, double q1, double q2, double q3, double max) {
+		ArrayList<Double> list = new ArrayList<>();
+		list.addAll(Arrays.asList(min, q1, q2, q3, max));
+		return list;
+	}
+	
+	
 }

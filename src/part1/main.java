@@ -70,16 +70,16 @@ public class main {
 		ArrayList<Double> example = new ArrayList<>();
 		ArrayList<Double> x = new ArrayList<>();
 
-		// trying sorting method checked
+		
 		example.add(1.1);
-		example.add(1.1);
-		example.add(1.1);
-		example.add(43.0);
-		example.add(43.0);
-		example.add(0.0);
-		x = m.SortAttribute(example);
-		System.out.println("sorted data " + x);
-
+		example.add(1.2);
+		example.add(1.3);
+		example.add(7.0);
+		example.add(1.5);
+		example.add(3.9);
+		example.add(3.0);
+	
+		
 		// trying add row method : checked
 		dataset = m.addData(dataset, example);
 		System.out.println("add row to data " + dataset);
@@ -89,7 +89,7 @@ public class main {
 		System.out.println("alter row having row index" + dataset);
 
 		// trying get row given a pos : checked
-		x = m.GetRow(dataset, 0);
+		x = m.GetRow(dataset,0);
 		System.out.println("get row having row index" + x);
 
 		// trying get pos of row : checked
@@ -138,7 +138,14 @@ public class main {
 		//trying list of list to .txt file
 		 
 		m.ListToFile(dataset);
-		
+		m.setData(dataset);
+		CentralTendencyM mm=new CentralTendencyM();
+		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median" +mm.GetMedian(example)+"midrange "+mm.GetMidRange(example));
+		System.out.println("ex "+example+" max " +m.GetMax(example)+ " min" +m.GetMin(example));
+		// trying sorting method checked
+		x = m.SortAttribute(example);
+		System.out.println("sorted data " + x);
+
 	}
 
 }
