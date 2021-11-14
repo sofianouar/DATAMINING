@@ -67,6 +67,7 @@ public class main {
  * test of all methods
  */
 		ManipData m = new ManipData();
+		m.setData(dataset);
 		ArrayList<Double> example = new ArrayList<>();
 		ArrayList<Double> x = new ArrayList<>();
 
@@ -80,57 +81,51 @@ public class main {
 	
 		
 		// trying add row method : checked
-		dataset = m.addData(dataset, example);
+		dataset = m.addData(example);
 		System.out.println("add row to data " + dataset);
 
 		// trying alter rown with num att method : checked
-		dataset = m.AlterRowN(dataset, 0, 1, 0.0);
+		dataset = m.AlterRow(0, 1, 0.0);
 		System.out.println("alter row having row index" + dataset);
 
 		// trying get row given a pos : checked
-		x = m.GetRow(dataset,0);
 		System.out.println("get row having row index" + x);
 
-		// trying get pos of row : checked
-		int y;
-		ArrayList<Double> temp = new ArrayList<>();
-		Double[] t = new Double[] { 0.4, 1.1, 43.0 };
-		temp.addAll(Arrays.asList(t));
-		y = m.GetPos(dataset, temp);
-		System.out.println("get pos having row " + (y + 1));
+	
 
 		// trying rowexists method : checked
 		boolean b;
 		Double[] tt = new Double[] { 0.4, 1.1 };
+		ArrayList<Double> temp = new ArrayList<>();
 		temp.addAll(Arrays.asList(tt));
-		b = m.RowExists(dataset, temp);
+		b = m.RowExists(0);
 		System.out.println("existance " + b);
 
 		// trying drop method
 		ArrayList<Double> dropp = new ArrayList<>();
 		Double[] f = new Double[] { 0.0, 14.84, 0.871, 5.763, 3.312, 2.221, 5.22, 1.0 };
 		dropp.addAll(Arrays.asList(f));
-		dataset = m.DropData(dataset, dropp);
+		dataset = m.DropData(3);
 		System.out.println("drop " + dataset);
 
 		// trying getattribute method2
 		ArrayList<Double> r = new ArrayList<>();
-		r = m.GetAttribute(dataset, 0);
+		r = m.GetAttribute(0);
 		System.out.println("att  " + r);
 		System.out.println("size " + dataset.size());
-		System.out.println("min  " + m.GetMin(r));
-		System.out.println("max  " + m.GetMax(r));
+		System.out.println("min  " + m.GetMin(0));
+		System.out.println("max  " + m.GetMax(0));
 		
 		// trying getattribute method
-		ArrayList<ArrayList<Double>> rr = new ArrayList<>();
-		rr = m.GetAttribute(dataset, 0, 1);
+		ArrayList<Double> rr = new ArrayList<>();
+		rr = m.GetAttribute(1);
 		System.out.println(" 2 att " + rr);
 		
 		// trying getfrequencies
 		//ArrayList<ArrayList<Double>> u = new ArrayList<>();
 		 ArrayList<ArrayList<Double>> u = new ArrayList<>();
 
-		u = m.GetFrequencies(example);
+		u = m.GetFrequencies(0);
 		System.out.println(" freq " + u);
 		
 		
@@ -139,10 +134,11 @@ public class main {
 
 		m.setData(dataset);
 		CentralTendencyM mm=new CentralTendencyM();
-		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median " + mm.GetMedian(example) +" midrange "+mm.GetMidRange(example));
-		System.out.println("ex "+example+" max " +m.GetMax(example)+ " min " +m.GetMin(example));
+		mm.setDataset(dataset);
+		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median " + mm.GetMedian(0) +" midrange "+mm.GetMidRange(0));
+		System.out.println("ex "+example+" max " +m.GetMax(0)+ " min " +m.GetMin(0));
 		// trying sorting method checked
-		x = m.SortAttribute(example);
+		x = m.SortAttribute(0);
 		System.out.println("sorted data " + x);
 		m.ListToFile(dataset);
 		

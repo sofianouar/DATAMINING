@@ -9,9 +9,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ManipData {
-	ArrayList<Double> row;
 	ArrayList<ArrayList<Double>> data;
-
+	ArrayList<Double> row;
 	/*
 	 * constructor
 	 */
@@ -22,24 +21,20 @@ public class ManipData {
 		this.data = data;
 	}
 
-	public ManipData(ArrayList<Double> row, ArrayList<ArrayList<Double>> data) {
-		this.row = row;
-		this.data = data;
-	}
-
 	/*
 	 * getters and setters
 	 */
+
+	public ArrayList<ArrayList<Double>> getData() {
+		return this.data;
+	}
+
 	public ArrayList<Double> getRow() {
 		return row;
 	}
 
 	public void setRow(ArrayList<Double> row) {
 		this.row = row;
-	}
-
-	public ArrayList<ArrayList<Double>> getData() {
-		return data;
 	}
 
 	public void setData(ArrayList<ArrayList<Double>> data) {
@@ -77,87 +72,73 @@ public class ManipData {
 		default:
 			// code block
 		}
-		return data;
+		return this.data;
 	}
 
 	// verifies if a line of data exists in the dataList
-	public boolean RowExists(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		return data.contains(row);
+	public boolean RowExists(int index) {
+		return this.data.contains(data.get(index));
 	}
 
-	// getting the position of a certain line of data , NOTE : value returned STARTS
-	// FROM 0
-	public int GetPos(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-
-		return data.indexOf(row);
-	}
-
+	
 	// getting the row data given the pos
-	public ArrayList<Double> GetRow(ArrayList<ArrayList<Double>> data, int index) {
-		return data.get(index);
+	public ArrayList<Double> GetRow(int index) {
+		index--;
+		return this.data.get(index);
 	}
 
 	// add Data to dataList
-	public ArrayList<ArrayList<Double>> addData(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		data.add(row);
-		return data;
+	public ArrayList<ArrayList<Double>> addData(ArrayList<Double> row) {
+		this.data.add(row);
+		return this.data;
 	}
 
 	// drop data from dataList
-	public ArrayList<ArrayList<Double>> DropData(ArrayList<ArrayList<Double>> data, ArrayList<Double> row) {
-		int tmp = 0;
-		if (RowExists(data, row)) {
-			tmp = GetPos(data, row);
-			data.remove(tmp);
+	public ArrayList<ArrayList<Double>> DropData(int index) {
+		index--;
+		if (RowExists(index) ){
+			data.remove(index);
 		}
 		return data;
 	}
 
 	// modify data having rowNumberN : NOTE : THE USER GIVES INDEXES STARTING FROM 1
-	public ArrayList<ArrayList<Double>> AlterRowN(ArrayList<ArrayList<Double>> data, int rownumber, int numAtt,
-			double value) {
+	public ArrayList<ArrayList<Double>> AlterRow(int rownumber, int numAtt,double value) {
 		numAtt--;
 		ArrayList<Double> tmpRow = new ArrayList<>();
 
-		data.get(rownumber).set(numAtt, value); /*
+		this.data.get(rownumber).set(numAtt, value); /*
 												 * the predefined set method replaces the index numAtt with value
 												 */
 
-		return data;
+		return this.data;
 	}
 
-	// modify data having row dataR : NOTE : THE USER GIVES INDEXES STARTING FROM 1
-	public ArrayList<ArrayList<Double>> AlterRowR(ArrayList<ArrayList<Double>> data, ArrayList<Double> row, int numAtt,
-			double value) {
-		numAtt--;
-		// not yet
-		return data;
-	}
 
 	// Sort Data ascendently
-	public static ArrayList<Double> SortAttribute(ArrayList<Double> row) {
-		Collections.sort(row);
-		return row;
+	public ArrayList<Double> SortAttribute(int indexAtt) {
+		Collections.sort(this.data.get(indexAtt));
+		return this.data.get(indexAtt);
 	}
 
 	// returns all values of a certain attribute in an arrayList
-	public static ArrayList<Double> GetAttribute(ArrayList<ArrayList<Double>> data, int index) {
+	public ArrayList<Double> GetAttribute(int index) {
 		ArrayList<Double> attribute = new ArrayList<>();
-		for (int i = 0; i < data.size(); i++) {
-			attribute.add(data.get(i).get(index));
+		for (int i = 0; i < this.data.size(); i++) {
+			attribute.add(this.data.get(i).get(index));
 		}
 		return attribute;
 	}
 
 	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,
 	// index1=att2)
-	public ArrayList<ArrayList<Double>> GetAttribute(ArrayList<ArrayList<Double>> data, int index1, int index2) {
+	public ArrayList<ArrayList<Double>> GetAttribute(int index1, int index2) {
 		ArrayList<Double> attribute1 = new ArrayList<>();
 		ArrayList<Double> attribute2 = new ArrayList<>();
 		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
 
-		attribute1 = GetAttribute(data, index1);
-		attribute2 = GetAttribute(data, index2);
+		attribute1 = GetAttribute(index1);
+		attribute2 = GetAttribute(index2);
 
 		attributes.add(attribute1);
 		attributes.add(attribute2);
@@ -166,21 +147,22 @@ public class ManipData {
 	}
 
 	// gets minimum of an arraylist
-	public static double GetMin(ArrayList<Double> data) {
+	public double GetMin(int indexAtt) {
 
-		return Collections.min(data);
+		return Collections.min(this.data.get(indexAtt));
 	}
 
 	// gets max of an arraylist
-	public static double GetMax(ArrayList<Double> data) {
+	public double GetMax(int indexAtt) {
 
-		return Collections.max(data);
+		return Collections.max(this.data.get(indexAtt));
 	}
 
 	// get frequence of all items : arraylist of vectors
 	// {[value1,freq1],[value2],freq2}
-	public static ArrayList<ArrayList<Double>> GetFrequencies(ArrayList<Double> data) {
-
+	public ArrayList<ArrayList<Double>> GetFrequencies(int indexAtt) {
+		ArrayList<Double> data = new ArrayList<>();
+		data=GetAttribute(indexAtt);
 		ArrayList<ArrayList<Double>> frequencies = new ArrayList<>();
 		ArrayList<Double> tuple = new ArrayList<Double>();
 		int freq;
