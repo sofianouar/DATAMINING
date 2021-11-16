@@ -54,11 +54,9 @@ public class CentralTendencyM {
 	public double GetTrMean(int pourcentage) {
 
 		double somme = 0;
-		// pourcentage=4, //4%
+		// pourcentage=4 = 4%
 		int k = this.attribute.size() * pourcentage / 100; // nbre de val a supprimer de chaque extremite
-		// System.out.println(k);
 		Collections.sort(this.attribute);
-		System.out.println(this.attribute);
 		for (int i = k; i < this.attribute.size() - k; i++) {
 			somme = somme + this.attribute.get(i);
 
@@ -73,29 +71,49 @@ public class CentralTendencyM {
 		Collections.sort(data);
 		if (data.size() % 2 == 0)
 			return Math.round((data.get((data.size() / 2) - 1) + data.get(data.size() / 2)) / 2.0 * 1e3) / 1e3;
-		;
 
 		return Math.round(data.get(data.size() / 2) * 1e3) / 1e3;
 	}
 
-	// mode
-	public ArrayList<Double> GetMode(int indexAtt) {
-		int cmode = 0;
+	// mode :{freq,values}
+	public ArrayList<Double> GetMode() {
+		int count = 0;
+		double maxFreq = 0.0;
 		ArrayList<Double> mode = new ArrayList<>();
-		// attribute = ManipData.SortAttribute(attribute);
+		ManipData m = new ManipData();
+		ArrayList<ArrayList<Double>> freq = new ArrayList<>();
+		freq = m.GetFrequencies(this.attribute);
+
+		for (int i = 0; i < freq.size(); i++) {
+			if (freq.get(i).get(1) >= maxFreq) {
+				maxFreq = freq.get(i).get(1);
+			}
+		}
+		for (int i = 0; i < freq.size(); i++) {
+			if (freq.get(i).get(1) == maxFreq) {
+				count =count+ 1;
+				mode.add(freq.get(i).get(0));
+			}
+		}
 
 		// type de modalitee
-		if (cmode == 1) // System.out.print("unimodal "+ 1);
-			mode.add(1.0);
+		if (count == 1) {// System.out.print("unimodal "+ 1);
+			mode.add((double) count);
+			System.out.print("Type de modalité : unimodal \n");
+		}
 
-		if (cmode == 2) // System.out.print("bimodale "+2);
-			mode.add(2.0);
-
-		if (cmode == 3) // System.out.print("trimodale "+3);
-			mode.add(3.0);
-
-		else // System.out.print("pas de mode "+0);
-			mode.add(0.0);
+		if (count == 2) { // System.out.print("bimodale "+2);
+			mode.add((double) count);
+			System.out.print("Type de modalité : bimodal \n");
+		}
+		if (count == 3) { // System.out.print("trimodale "+3);
+			mode.add((double) count);
+			System.out.print("Type de modalité : trimodal \n");
+		} 
+		if(count>3){ // System.out.print("pas de mode "+0);
+			mode.add((double) count);
+			System.out.print("Type de modalité : pas de mode \n");
+		}
 
 		return mode;
 	}
@@ -104,7 +122,7 @@ public class CentralTendencyM {
 
 	// milieu de l'étendue
 	public double GetMidRange() {
-		return (this.GetQ4() + this.GetQ0()) / 2.0;
+		return Math.round(((this.GetQ4() + this.GetQ0()) / 2.0) * 1e3) / 1e3;
 	}
 
 	// déduire les symétries
@@ -149,7 +167,7 @@ public class CentralTendencyM {
 //calcul q3********************************
 
 	public double GetQ3() {
-		double valuee,value ;
+		double valuee, value;
 
 		Collections.sort(this.attribute);
 		// double q3 = attribute.size() * 3 / 4;
@@ -180,12 +198,12 @@ public class CentralTendencyM {
 
 //calcul Ecart interquartile*****************************
 	public double GetIQR() {
-		return (this.GetQ3() - this.GetQ1());
+		return Math.round((this.GetQ3() - this.GetQ1()) * 1e3) / 1e3;
 	}
 
 //calcul etendue*************************************
 	public double GetEtendu() {
-		return (this.GetQ4() - this.GetQ0());
+		return Math.round((this.GetQ4() - this.GetQ0()) * 1e3) / 1e3;
 	}
 
 //calcul outliers***********************************************************
@@ -213,7 +231,7 @@ public class CentralTendencyM {
 		double ect;
 		double somme = 0;
 		double mean = this.GetMean();
-		
+
 		for (int i = 0; i < this.attribute.size(); i++) {
 			somme = somme + (Math.pow(this.attribute.get(i) - mean, 2));
 		}

@@ -1,6 +1,7 @@
 package part1;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,7 +32,6 @@ public class ManipData {
 		return this.data;
 	}
 
-	
 	public void setData(ArrayList<ArrayList<Double>> data) {
 		this.data = data;
 	}
@@ -42,14 +42,14 @@ public class ManipData {
 
 	public ArrayList<ArrayList<Double>> OpenTxtFile(String path) throws IOException {
 		// Decalarations
+		String currentDirectory = new File("").getAbsolutePath();
 		int c = 0;
 		String[] splitRow;
 		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
 		ArrayList<ArrayList<Double>> dataset = new ArrayList<>(); // list of one_line
 
 		// reading the file seeds_data.txt
-		BufferedReader bf = new BufferedReader(
-				new FileReader(path));
+		BufferedReader bf = new BufferedReader(new FileReader(currentDirectory + path));
 
 		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
 		String tmp_line = bf.readLine();
@@ -126,6 +126,7 @@ public class ManipData {
 	// add Data to dataList
 	public ArrayList<ArrayList<Double>> addData(ArrayList<Double> row) {
 		this.data.add(row);
+		this.setData(data);
 		return this.data;
 	}
 
@@ -161,9 +162,11 @@ public class ManipData {
 		return attribute;
 	}
 
-	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,index1=att2)
+	// returns all values of att1 and att2 in an arrayList<arrayList> (index
+	// 0=att1,index1=att2)
 	public ArrayList<ArrayList<Double>> GetAttribute(int index1, int index2) {
-		index1--; index2--;
+		index1--;
+		index2--;
 		ArrayList<Double> attribute1 = new ArrayList<>();
 		ArrayList<Double> attribute2 = new ArrayList<>();
 		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
@@ -177,16 +180,12 @@ public class ManipData {
 		return attributes;
 	}
 
-
 	// get frequence of all items : arraylist of vectors
 	// {[value1,freq1],[value2],freq2}
-	public ArrayList<ArrayList<Double>> GetFrequencies(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		data = GetAttribute(indexAtt);
+	public ArrayList<ArrayList<Double>> GetFrequencies(ArrayList<Double> data) {
 		ArrayList<ArrayList<Double>> frequencies = new ArrayList<>();
 		ArrayList<Double> tuple = new ArrayList<Double>();
 		int freq;
-
 		for (int i = 0; i < data.size(); i++) {
 
 			freq = Collections.frequency(data, data.get(i));
