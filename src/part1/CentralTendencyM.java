@@ -75,7 +75,7 @@ public class CentralTendencyM {
 		return Math.round(data.get(data.size() / 2) * 1e3) / 1e3;
 	}
 
-	// mode :{freq,values}
+	// mode :{values, freq}
 	public ArrayList<Double> GetMode() {
 		int count = 0;
 		double maxFreq = 0.0;
