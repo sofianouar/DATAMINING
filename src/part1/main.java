@@ -5,145 +5,60 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Scanner;
 
 
 public class main {
 
 	public static void main(String[] args) throws IOException {
-/*
- * ####1 : READING DATA
- */
-
-		System.out.println("\n Reading dataset...");
-
-		// Decalarations
-		int c = 0;
-		String[] splitRow;
-		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
-		ArrayList<ArrayList<Double>> dataset = new ArrayList<>(); // list of one_line
-
-		// reading the file seeds_data.txt
-		BufferedReader bf = new BufferedReader(
-				new FileReader("C:\\Users\\soffi\\Documents\\GitHub\\DATAMINING\\ressources\\test.txt"));
-
-		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
-		String tmp_line = bf.readLine();
-
 		/*
-		 * spliting a specific line to separate the attributes :
-		 * one_line=[1,2,3,4,5,6,7,8] parsing one_line's values to double :
-		 * [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0] adding one_line to list_data :
-		 * [[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]....]
+		 * ####1 : READING DATA
 		 */
-
-		while (tmp_line != null) {
-			splitRow = tmp_line.split("\t+");
-			one_line = new ArrayList<>();
-
-			for (String s : splitRow) {
-				one_line.add(Double.parseDouble(s));
-			}
-
-			dataset.add(one_line);
-			c++;
-			tmp_line = bf.readLine();
-
-		}
-
-		// printing list
-		System.out.print(dataset);
-		System.out.println("\n Reading dataset ends \n");
-
+		System.out.println("Reading dataset ...");
 		
-/*
- * ####2 : Calculating Central Tendency Metrics
- */
+		ManipData manip = new ManipData();
+		String path = "C:\\Users\\soffi\\Documents\\GitHub\\DATAMINING\\ressources\\test.txt";
 		
+		ArrayList<ArrayList<Double>> dataset= new ArrayList<>();
+		dataset=manip.OpenTxtFile(path);
+		manip.setData(dataset);
+		System.out.println("\nReading Ends\n");
 		
+		/*
+		 * ####2 : Calculating Central Tendency Metrics
+		 */
+		System.out.println("\nCalculating Central Tendency Metrics\n");
+		System.out.print("\nChoose an attribute : \n");
+		System.out.print("1. area A,\r\n" + 
+				"2. perimeter P,\r\n" + 
+				"3. compactness C = 4*pi*A/P^2,\r\n" + 
+				"4. length of kernel,\r\n" + 
+				"5. width of kernel,\r\n" + 
+				"6. asymmetry coefficient\r\n" + 
+				"7. length of kernel groove. \n8.Class \n    your choice : ");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
 		
+		CentralTendencyM metrics = new CentralTendencyM();
+	 	metrics.setDataset(dataset);
+		metrics.setAttribute(manip.GetAttribute(choice));
 		
-/*
- * test of all methods
- */
-		ManipData m = new ManipData();
-		m.setData(dataset);
-		ArrayList<Double> example = new ArrayList<>();
-		ArrayList<Double> x = new ArrayList<>();
-
-		
-		example.add(1.1);
-		example.add(1.2);
-		example.add(1.3);
-		example.add(1.5);
-		example.add(3.9);
-		example.add(3.0);
-	
-		
-		// trying add row method : checked
-		dataset = m.addData(example);
-		System.out.println("add row to data " + dataset);
-
-		// trying alter rown with num att method : checked
-		dataset = m.AlterRow(0, 1, 0.0);
-		System.out.println("alter row having row index" + dataset);
-
-		// trying get row given a pos : checked
-		System.out.println("get row having row index" + x);
-
-	
-
-		// trying rowexists method : checked
-		boolean b;
-		Double[] tt = new Double[] { 0.4, 1.1 };
-		ArrayList<Double> temp = new ArrayList<>();
-		temp.addAll(Arrays.asList(tt));
-		b = m.RowExists(0);
-		System.out.println("existance " + b);
-
-		// trying drop method
-		ArrayList<Double> dropp = new ArrayList<>();
-		Double[] f = new Double[] { 0.0, 14.84, 0.871, 5.763, 3.312, 2.221, 5.22, 1.0 };
-		dropp.addAll(Arrays.asList(f));
-		dataset = m.DropData(3);
-		System.out.println("drop " + dataset);
-
-		// trying getattribute method2
-		ArrayList<Double> r = new ArrayList<>();
-		r = m.GetAttribute(0);
-		System.out.println("att  " + r);
-		System.out.println("size " + dataset.size());
-		System.out.println("min  " + m.GetMin(0));
-		System.out.println("max  " + m.GetMax(0));
-		
-		// trying getattribute method
-		ArrayList<Double> rr = new ArrayList<>();
-		rr = m.GetAttribute(1);
-		System.out.println(" 2 att " + rr);
-		
-		// trying getfrequencies
-		//ArrayList<ArrayList<Double>> u = new ArrayList<>();
-		 ArrayList<ArrayList<Double>> u = new ArrayList<>();
-
-		u = m.GetFrequencies(0);
-		System.out.println(" freq " + u);
-		
-		
-		//trying list of list to .txt file
-		 
-
-		m.setData(dataset);
-		CentralTendencyM mm=new CentralTendencyM();
-		mm.setDataset(dataset);
-		System.out.println("example "+example+" mean " +mm.GetMean(example)+ " median " + mm.GetMedian(0) +" midrange "+mm.GetMidRange(0));
-		System.out.println("ex "+example+" max " +m.GetMax(0)+ " min " +m.GetMin(0));
-		// trying sorting method checked
-		x = m.SortAttribute(0);
-		System.out.println("sorted data " + x);
-		m.ListToFile(dataset);
-		
-		
-		
+		System.out.print("Median : "+metrics.GetMedian(choice)+"\n");
+		System.out.print("Mode : "+"\n");
+		System.out.print("Mean : "+metrics.GetMean()+"\n");
+		System.out.print("Enter pourcentage (1-100%) to calculate trimmed mean : ");
+		int prcentage = sc.nextInt();
+		System.out.print("Trimmed mean : "+metrics.GetTrMean(choice,prcentage)+"\n");
+		System.out.print("Min : "+metrics.GetQ0(choice)+"\n");
+		System.out.print("Max : "+metrics.GetQ4(choice)+"\n");
+		System.out.print("Etendue : "+metrics.GetEtendu(choice)+"\n");
+		System.out.print("MidRange : "+metrics.GetMidRange(choice)+"\n");
+		System.out.print("Q1 : "+metrics.GetQ1(choice)+"\n");
+		System.out.print("Q3 : "+metrics.GetQ3(choice)+"\n");
+		System.out.print("Ecart interquartile : "+metrics.GetIQR(choice)+"\n");
+		System.out.print("Outliers : \n    -MinValue = "+metrics.GetOutliersMin(choice)+" \n    -MaxValue = "+metrics.GetOutliersMax(choice)+"\n");
+		System.out.print("Ecart type : "+metrics.GetEcartType(choice)+"\n");
+		System.out.print("Variance : "+metrics.GetVariance(choice)+"\n");
 	}
 
 }

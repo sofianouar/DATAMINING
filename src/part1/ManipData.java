@@ -1,5 +1,7 @@
 package part1;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Set;
 
 public class ManipData {
 	ArrayList<ArrayList<Double>> data;
-	ArrayList<Double> row;
+
 	/*
 	 * constructor
 	 */
@@ -29,14 +31,7 @@ public class ManipData {
 		return this.data;
 	}
 
-	public ArrayList<Double> getRow() {
-		return row;
-	}
-
-	public void setRow(ArrayList<Double> row) {
-		this.row = row;
-	}
-
+	
 	public void setData(ArrayList<ArrayList<Double>> data) {
 		this.data = data;
 	}
@@ -44,6 +39,48 @@ public class ManipData {
 	/*
 	 * functions
 	 */
+
+	public ArrayList<ArrayList<Double>> OpenTxtFile(String path) throws IOException {
+		// Decalarations
+		int c = 0;
+		String[] splitRow;
+		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
+		ArrayList<ArrayList<Double>> dataset = new ArrayList<>(); // list of one_line
+
+		// reading the file seeds_data.txt
+		BufferedReader bf = new BufferedReader(
+				new FileReader(path));
+
+		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
+		String tmp_line = bf.readLine();
+
+		/*
+		 * spliting a specific line to separate the attributes :
+		 * one_line=[1,2,3,4,5,6,7,8] parsing one_line's values to double :
+		 * [1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0] adding one_line to list_data :
+		 * [[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0],[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0]....]
+		 */
+
+		while (tmp_line != null) {
+			splitRow = tmp_line.split("\t+");
+			one_line = new ArrayList<>();
+
+			for (String s : splitRow) {
+				one_line.add(Double.parseDouble(s));
+			}
+
+			dataset.add(one_line);
+			c++;
+			tmp_line = bf.readLine();
+
+		}
+
+		// printing list
+		System.out.print(dataset);
+		this.setData(dataset);
+		return dataset;
+	}
+
 	public void ListToFile(ArrayList<ArrayList<Double>> dataset) throws IOException {
 		FileWriter writer = new FileWriter("output.txt");
 		for (int k = 0; k < dataset.size(); k++) {
@@ -56,7 +93,7 @@ public class ManipData {
 		return;
 	}
 
-	// open file data
+	// open different types of files data
 	public ArrayList<ArrayList<Double>> openFile(String Otype) {
 		// not yet
 		switch (Otype) {
@@ -80,7 +117,6 @@ public class ManipData {
 		return this.data.contains(data.get(index));
 	}
 
-	
 	// getting the row data given the pos
 	public ArrayList<Double> GetRow(int index) {
 		index--;
@@ -96,33 +132,35 @@ public class ManipData {
 	// drop data from dataList
 	public ArrayList<ArrayList<Double>> DropData(int index) {
 		index--;
-		if (RowExists(index) ){
+		if (RowExists(index)) {
 			data.remove(index);
 		}
 		return data;
 	}
 
 	// modify data having rowNumberN : NOTE : THE USER GIVES INDEXES STARTING FROM 1
-	public ArrayList<ArrayList<Double>> AlterRow(int rownumber, int numAtt,double value) {
+	public ArrayList<ArrayList<Double>> AlterRow(int rownumber, int numAtt, double value) {
 		numAtt--;
 		ArrayList<Double> tmpRow = new ArrayList<>();
 
-		this.data.get(rownumber).set(numAtt, value); /*
-												 * the predefined set method replaces the index numAtt with value
-												 */
+		this.data.get(rownumber).set(numAtt,
+				value); /*
+						 * the predefined set method replaces the index numAtt with value
+						 */
 
 		return this.data;
 	}
 
-
 	// Sort Data ascendently
 	public ArrayList<Double> SortAttribute(int indexAtt) {
+		indexAtt--;
 		Collections.sort(this.data.get(indexAtt));
 		return this.data.get(indexAtt);
 	}
 
 	// returns all values of a certain attribute in an arrayList
 	public ArrayList<Double> GetAttribute(int index) {
+		index--;
 		ArrayList<Double> attribute = new ArrayList<>();
 		for (int i = 0; i < this.data.size(); i++) {
 			attribute.add(this.data.get(i).get(index));
@@ -133,6 +171,7 @@ public class ManipData {
 	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,
 	// index1=att2)
 	public ArrayList<ArrayList<Double>> GetAttribute(int index1, int index2) {
+		index1--; index2--;
 		ArrayList<Double> attribute1 = new ArrayList<>();
 		ArrayList<Double> attribute2 = new ArrayList<>();
 		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
@@ -162,7 +201,7 @@ public class ManipData {
 	// {[value1,freq1],[value2],freq2}
 	public ArrayList<ArrayList<Double>> GetFrequencies(int indexAtt) {
 		ArrayList<Double> data = new ArrayList<>();
-		data=GetAttribute(indexAtt);
+		data = GetAttribute(indexAtt);
 		ArrayList<ArrayList<Double>> frequencies = new ArrayList<>();
 		ArrayList<Double> tuple = new ArrayList<Double>();
 		int freq;
