@@ -151,13 +151,6 @@ public class ManipData {
 		return this.data;
 	}
 
-	// Sort Data ascendently
-	public ArrayList<Double> SortAttribute(int indexAtt) {
-		indexAtt--;
-		Collections.sort(this.data.get(indexAtt));
-		return this.data.get(indexAtt);
-	}
-
 	// returns all values of a certain attribute in an arrayList
 	public ArrayList<Double> GetAttribute(int index) {
 		index--;
@@ -168,16 +161,15 @@ public class ManipData {
 		return attribute;
 	}
 
-	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,
-	// index1=att2)
+	// returns all values of att1 and att2 in an arrayList<arrayList> (index 0=att1,index1=att2)
 	public ArrayList<ArrayList<Double>> GetAttribute(int index1, int index2) {
 		index1--; index2--;
 		ArrayList<Double> attribute1 = new ArrayList<>();
 		ArrayList<Double> attribute2 = new ArrayList<>();
 		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
 
-		attribute1 = GetAttribute(index1);
-		attribute2 = GetAttribute(index2);
+		attribute1 = this.GetAttribute(index1);
+		attribute2 = this.GetAttribute(index2);
 
 		attributes.add(attribute1);
 		attributes.add(attribute2);
@@ -185,17 +177,6 @@ public class ManipData {
 		return attributes;
 	}
 
-	// gets minimum of an arraylist
-	public double GetMin(int indexAtt) {
-
-		return Collections.min(this.data.get(indexAtt));
-	}
-
-	// gets max of an arraylist
-	public double GetMax(int indexAtt) {
-
-		return Collections.max(this.data.get(indexAtt));
-	}
 
 	// get frequence of all items : arraylist of vectors
 	// {[value1,freq1],[value2],freq2}

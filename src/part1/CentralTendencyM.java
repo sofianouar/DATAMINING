@@ -28,56 +28,54 @@ public class CentralTendencyM {
 		this.attribute = data;
 	}
 
-	/*
-	 * functions
-	 */
-
-	// moyenne
-	public double GetMean() {
-		
-		double somme = 0;
-		for (int i = 0; i < this.attribute.size(); i++) {
-			somme = somme + this.attribute.get(i);
-		}
-
-		return Math.round((1 / (double) this.attribute.size() * somme) * 1e2) / 1e2;
-	}
-
-	// trimmed moy
-	public double GetTrMean(int indexAtt, int pourcentage) {
-		ArrayList<Double> attribute = new ArrayList<>();
-		attribute = this.dataset.get(indexAtt);
-		double somme = 0;
-		// pourcentage=4, //4%
-		int k = attribute.size() * pourcentage / 100; // nbre de val a supprimer de chaque extremite
-		// System.out.println(k);
-		Collections.sort(attribute);
-		System.out.println(attribute);
-		for (int i = k; i < attribute.size() - k; i++) {
-			somme = somme + attribute.get(i);
-
-		}
-		return Math.round((1 / (double) (attribute.size() - 2 * k) * somme) * 1e2) / 1e2;
-	}
-
 	public ArrayList<ArrayList<Double>> getDataset() {
-		return dataset;
+		return this.dataset;
 	}
 
 	public void setDataset(ArrayList<ArrayList<Double>> dataset) {
 		this.dataset = dataset;
 	}
 
+	/*
+	 * functions
+	 */
+
+	// moyenne
+	public double GetMean() {
+		double somme = 0;
+		for (int i = 0; i < this.attribute.size(); i++) {
+			somme = somme + this.attribute.get(i);
+		}
+
+		return Math.round((1 / (double) this.attribute.size() * somme) * 1e3) / 1e3;
+	}
+
+	// trimmed moy
+	public double GetTrMean(int pourcentage) {
+
+		double somme = 0;
+		// pourcentage=4, //4%
+		int k = this.attribute.size() * pourcentage / 100; // nbre de val a supprimer de chaque extremite
+		// System.out.println(k);
+		Collections.sort(this.attribute);
+		System.out.println(this.attribute);
+		for (int i = k; i < this.attribute.size() - k; i++) {
+			somme = somme + this.attribute.get(i);
+
+		}
+		return Math.round((1 / (double) (this.attribute.size() - 2 * k) * somme) * 1e3) / 1e3;
+	}
+
 	// médiane
-	public double GetMedian(int indexAtt) {
+	public double GetMedian() {
 		ArrayList<Double> data = new ArrayList<>();
-		data = this.dataset.get(indexAtt);
+		data = this.attribute;
 		Collections.sort(data);
 		if (data.size() % 2 == 0)
-			return Math.round((data.get((data.size() / 2) - 1) + data.get(data.size() / 2)) / 2.0 * 1e2) / 1e2;
+			return Math.round((data.get((data.size() / 2) - 1) + data.get(data.size() / 2)) / 2.0 * 1e3) / 1e3;
 		;
 
-		return Math.round(data.get(data.size() / 2) * 1e2) / 1e2;
+		return Math.round(data.get(data.size() / 2) * 1e3) / 1e3;
 	}
 
 	// mode
@@ -105,10 +103,8 @@ public class CentralTendencyM {
 	// l'étendue
 
 	// milieu de l'étendue
-	public double GetMidRange(int indexAtt) {
-		ManipData m = new ManipData(this.dataset);
-		//m.setRow(this.dataset.get(indexAtt));
-		return (m.GetMax(indexAtt) + m.GetMin(indexAtt)) / 2.0;
+	public double GetMidRange() {
+		return (this.GetQ4() + this.GetQ0()) / 2.0;
 	}
 
 	// déduire les symétries
@@ -131,137 +127,104 @@ public class CentralTendencyM {
 
 //calcul q1*******************************************
 
-	public double GetQ1(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		data = this.dataset.get(indexAtt);
-		Collections.sort(data);
+	public double GetQ1() {
+		double value, valuee;
+		Collections.sort(this.attribute);
 		// double q1 = attribute.size()/ 4;
-		if (data.size() % 4 == 0) {
+		if (this.attribute.size() % 4 == 0) {
 
-			double value = (data.get(Math.round(data.size() / 4) - 1));
-			return Math.round(value * 1e2) / 1e2;
-
-			// return Math.round((attribute.get((attribute.size() / 2) - 1) + attribute.get(attribute.size() /
-			// 2)) / 2.0 * 1e2) / 1e2;;
+			value = (this.attribute.get(Math.round(this.attribute.size() / 4) - 1));
+			return Math.round(value * 1e3) / 1e3;
 
 		}
 
 		else {
-			double valuee = data.get(Math.round(data.size() / 4));
+			valuee = this.attribute.get(Math.round(this.attribute.size() / 4));
 
-			return Math.round(valuee * 1e2) / 1e2;
+			return Math.round(valuee * 1e3) / 1e3;
 		}
 
 	}
 
 //calcul q3********************************
 
-	public double GetQ3(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		data = this.dataset.get(indexAtt);
-		Collections.sort(data);
+	public double GetQ3() {
+		double valuee,value ;
+
+		Collections.sort(this.attribute);
 		// double q3 = attribute.size() * 3 / 4;
-
-		if (data.size() * 3 % 4 == 0) {
-			double value = data.get(Math.round(data.size() * 3 / 4) - 1);
-			return Math.round(value * 1e2) / 1e2;
-
+		if (this.attribute.size() * 3 % 4 == 0) {
+			value = this.attribute.get(Math.round(this.attribute.size() * 3 / 4) - 1);
+			return Math.round(value * 1e3) / 1e3;
 		}
 
 		else {
-
-			double valuee = data.get(Math.round(data.size() * 3 / 4));
-			return Math.round(valuee * 1e2) / 1e2;
+			valuee = this.attribute.get(Math.round(this.attribute.size() * 3 / 4));
+			return Math.round(valuee * 1e3) / 1e3;
 		}
 
 	}
 
 //calcul Q0 (min)*******************************
-	public double GetQ0(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		data = this.dataset.get(indexAtt);
-		Collections.sort(data);
-		double q0 = data.get(0);
-		return q0;
-
+	public double GetQ0() {
+		Collections.sort(this.attribute);
+		return this.attribute.get(0);
 	}
 
 //calcul Q4 (max)********************************
-	public double GetQ4(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		data = this.dataset.get(indexAtt);
-		Collections.sort(data);
-		double q4 = data.get(data.size() - 1);
+	public double GetQ4() {
+		Collections.sort(this.attribute);
 
-		return q4;
-
+		return (this.attribute.get(this.attribute.size() - 1));
 	}
 
 //calcul Ecart interquartile*****************************
-	public double GetIQR(int indexAtt) {
-		double iqr;
-
-		iqr = this.GetQ3(indexAtt) - this.GetQ1(indexAtt);
-		return iqr;
-
+	public double GetIQR() {
+		return (this.GetQ3() - this.GetQ1());
 	}
 
 //calcul etendue*************************************
-	public double GetEtendu(int indexAtt) {
-		double et = this.GetQ4(indexAtt) - this.GetQ0(indexAtt);
-
-		return et;
-
+	public double GetEtendu() {
+		return (this.GetQ4() - this.GetQ0());
 	}
 
 //calcul outliers***********************************************************
-	public double GetOutliersMax(int indexAtt) {
-
+	public double GetOutliersMax() {
 		// Q3 + 1. 5 * IQR
+		double outMax = this.GetQ3() + (1.5 * this.GetIQR());
 
-		double outMax = this.GetQ3(indexAtt) + (1.5 * this.GetIQR(indexAtt));
-
-		return outMax;
+		return Math.round(outMax * 1e3) / 1e3;
 
 	}
 
-	public double GetOutliersMin(int indexAtt) {
-
+	public double GetOutliersMin() {
 		// Q1 - 1.5 * IQR
-		double outMin = this.GetQ1(indexAtt) - (1.5 * this.GetIQR(indexAtt));
+		double outMin = this.GetQ1() - (1.5 * this.GetIQR());
 
-		return outMin;
+		return Math.round(outMin * 1e3) / 1e3;
 
 	}
 
 //calcul ecart type*********************************************************
-	public double GetEcartType(int indexAtt) {
-		ArrayList<Double> data = new ArrayList<>();
-		ManipData man=new ManipData(this.dataset);
-		man.setData(this.dataset);
-		data = man.GetAttribute(indexAtt);
-		
+	public double GetEcartType() {
+
 		Collections.sort(this.attribute);
 
-		double ect = 0;
+		double ect;
 		double somme = 0;
-
 		double mean = this.GetMean();
-		for (int i = 0; i < data.size(); i++)
-
-		{
-			somme = somme + (Math.pow(data.get(i) - mean, 2.0));
-
-			double tailleInv = 1 / data.size();
-			ect = Math.sqrt(tailleInv * somme);
+		
+		for (int i = 0; i < this.attribute.size(); i++) {
+			somme = somme + (Math.pow(this.attribute.get(i) - mean, 2));
 		}
-		return Math.round(ect * 1e2) / 1e2;
+		ect = Math.sqrt((1 / (double) this.attribute.size()) * somme);
+		return Math.round(ect * 1e3) / 1e3;
 	}
 
 //calcul variance*******************************************
-	public double GetVariance(int indexAtt) {
+	public double GetVariance() {
 
-		return Math.round(Math.pow(this.GetEcartType(indexAtt), 2.0) * 1e2) / 1e2;
+		return Math.round(Math.pow(this.GetEcartType(), 2) * 1e3) / 1e3;
 
 	}
 }
