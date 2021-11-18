@@ -42,14 +42,17 @@ public class ManipData {
 
 	public ArrayList<ArrayList<Double>> OpenTxtFile(String path) throws IOException {
 		// Decalarations
-		String currentDirectory = new File("").getAbsolutePath();
+		// islam modifs
+		//String currentDirectory = new File("").getAbsolutePath();
 		int c = 0;
 		String[] splitRow;
 		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
 		ArrayList<ArrayList<Double>> dataset = new ArrayList<>(); // list of one_line
 
 		// reading the file seeds_data.txt
-		BufferedReader bf = new BufferedReader(new FileReader(currentDirectory + path));
+		// islam modifs
+		// BufferedReader bf = new BufferedReader(new FileReader(currentDirectory + path));
+		BufferedReader bf = new BufferedReader(new FileReader(path));
 
 		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
 		String tmp_line = bf.readLine();
@@ -81,11 +84,13 @@ public class ManipData {
 		return dataset;
 	}
 
-	public void ListToFile(ArrayList<ArrayList<Double>> dataset) throws IOException {
-		FileWriter writer = new FileWriter("output.txt");
+	// islam modifs	
+	public void ListToFile(ArrayList<ArrayList<Double>> dataset,String  path) throws IOException {
+		FileWriter writer = new FileWriter(path);
 		for (int k = 0; k < dataset.size(); k++) {
 			for (Double tmp : dataset.get(k)) {
-				writer.write(tmp + System.lineSeparator());
+				// writer.write(tmp + System.lineSeparator());
+				writer.write(tmp + "\t");
 			}
 			writer.write("\n");
 		}
@@ -207,5 +212,51 @@ public class ManipData {
 		list.addAll(Arrays.asList(min, q1, q2, q3, max));
 		return list;
 	}
+	
+	public Individu arrayToIndividu(ArrayList<Double> _array, int i) {
+		Individu ind = new Individu(
+				i,
+				_array.get(0),
+				_array.get(1),
+				_array.get(2),
+				_array.get(3),
+				_array.get(4),
+				_array.get(5),
+				_array.get(6),
+				_array.get(7))	
+				;
+		return ind;		
+	}
+	
+	public ArrayList<Double> indToArray(Individu ind){
+		ArrayList<Double> _array = new ArrayList<Double>();
+		_array.add(ind.getA1());
+		_array.add(ind.getA2());
+		_array.add(ind.getA3());
+		_array.add(ind.getA4());
+		_array.add(ind.getA5());
+		_array.add(ind.getA6());
+		_array.add(ind.getA7());
+		_array.add(ind.getClasse());
+		return _array;
+	}
+	
+	public ArrayList<Individu> arrayDatatoIndData(ArrayList<ArrayList<Double>> _array) {
+		ArrayList<Individu> indArray = new ArrayList<Individu>();
+		for(int i = 0 ; i < _array.size(); i++) {
+			indArray.add(this.arrayToIndividu(_array.get(i), i+1));
+		}
+		return indArray;
+	}
+	
+	public ArrayList<ArrayList<Double>> indDataToArrayData(ArrayList<Individu> indArray){
+		ArrayList<ArrayList<Double>> _array = new ArrayList<ArrayList<Double>>();
+		for(int i = 0 ; i < indArray.size(); i++) {
+			_array.add(this.indToArray(indArray.get(i)));
+		}
+		return _array;
+	}
+	
+	
 
 }
