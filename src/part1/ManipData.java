@@ -43,7 +43,7 @@ public class ManipData {
 	public ArrayList<ArrayList<Double>> OpenTxtFile(String path) throws IOException {
 		// Decalarations
 		// islam modifs
-		//String currentDirectory = new File("").getAbsolutePath();
+		String currentDirectory = new File("").getAbsolutePath();
 		int c = 0;
 		String[] splitRow;
 		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
@@ -52,7 +52,7 @@ public class ManipData {
 		// reading the file seeds_data.txt
 		// islam modifs
 		// BufferedReader bf = new BufferedReader(new FileReader(currentDirectory + path));
-		BufferedReader bf = new BufferedReader(new FileReader(path));
+		BufferedReader bf = new BufferedReader(new FileReader(currentDirectory +path));
 
 		// reading all data lines : 1 2 3 4 5 6 7 8, 1 2 3 4 5 6 7 8 ....
 		String tmp_line = bf.readLine();
@@ -257,6 +257,26 @@ public class ManipData {
 		return _array;
 	}
 	
-	
+	// data description
+		public ArrayList<ArrayList<String>> DataDesc() {
+			ArrayList<ArrayList<String>> output = new ArrayList<>();
+			ArrayList<Double> attribute = new ArrayList<>();
+			ArrayList<String> tmp;
+			for (int i = 0; i < this.data.get(0).size(); i++) {
+				System.out.println("1");
+
+				attribute=GetAttribute(i+1);
+				System.out.println("2");
+
+				tmp = new ArrayList<>();
+				Collections.sort(attribute);
+				tmp.add("Attribute "+(i+1)+" ");
+				tmp.add(attribute.get(0).toString());
+				tmp.add(attribute.get(attribute.size()-1).toString());
+				
+				output.add(tmp);
+			}
+			return output;
+		}
 
 }
