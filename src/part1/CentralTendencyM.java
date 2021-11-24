@@ -50,6 +50,19 @@ public class CentralTendencyM {
 		return Math.round((1 / (double) this.attribute.size() * somme) * 1e3) / 1e3;
 	}
 
+	// get mean with index
+	public double GetMean(int index) {
+		double somme = 0;
+		ArrayList<Double> attribute = new ArrayList<>();
+		ManipData man = new ManipData(this.dataset);
+		attribute = man.GetAttribute(index);
+		for (int i = 0; i < attribute.size(); i++) {
+			somme = somme + attribute.get(i);
+		}
+
+		return Math.round((1 / (double) attribute.size() * somme) * 1e3) / 1e3;
+	}
+
 	// trimmed moy
 	public double GetTrMean(int pourcentage) {
 
@@ -91,7 +104,7 @@ public class CentralTendencyM {
 		}
 		for (int i = 0; i < freq.size(); i++) {
 			if (freq.get(i).get(1) == maxFreq) {
-				count =count+ 1;
+				count = count + 1;
 				mode.add(freq.get(i).get(0));
 			}
 		}
@@ -109,8 +122,8 @@ public class CentralTendencyM {
 		if (count == 3) { // System.out.print("trimodale "+3);
 			mode.add((double) count);
 			System.out.print("Type de modalit� : trimodal \n");
-		} 
-		if(count>3){ // System.out.print("pas de mode "+0);
+		}
+		if (count > 3) { // System.out.print("pas de mode "+0);
 			mode.add((double) count);
 			System.out.print("Type de modalit� : pas de mode \n");
 		}
@@ -239,10 +252,78 @@ public class CentralTendencyM {
 		return Math.round(ect * 1e3) / 1e3;
 	}
 
+//calcul eart type avec index
+	public double GetEcartType(int index) {
+		ArrayList<Double> attribute = new ArrayList<>();
+		ManipData man = new ManipData(this.dataset);
+		attribute = man.GetAttribute(index);
+		Collections.sort(attribute);
+
+		double ect;
+		double somme = 0;
+		double mean = this.GetMean();
+
+		for (int i = 0; i < attribute.size(); i++) {
+			somme = somme + (Math.pow(attribute.get(i) - mean, 2));
+		}
+		ect = Math.sqrt((1 / (double) attribute.size()) * somme);
+		return Math.round(ect * 1e3) / 1e3;
+	}
+
 //calcul variance*******************************************
 	public double GetVariance() {
 
 		return Math.round(Math.pow(this.GetEcartType(), 2) * 1e3) / 1e3;
 
 	}
+
+	// calcul covariance*******************************************
+	public double GetCoVariance(int i, int j) {
+		ManipData man = new ManipData(this.dataset);
+		ArrayList<Double> att1 = man.GetAttribute(i);
+		ArrayList<Double> att2 = man.GetAttribute(j);
+		double somme = 0.0;
+		double tmp;
+		double moy1 = GetMean(i);
+		double moy2 = GetMean(j);
+		for (int k = 0; k < att1.size(); k++) {
+			tmp = (att1.get(k) - moy1) * (att2.get(k) - moy2);
+			somme = somme + (tmp / (double) att1.size());
+		}
+		return Math.round(somme * 1e3) / 1e3;
+	}
+
+	// calcul covariance*******************************************
+	public ArrayList<String> GetCorrelation(int i, int j) {
+		ArrayList<String> res = new ArrayList<>();
+		ManipData man = new ManipData(this.dataset);
+		ArrayList<Double> att1 = man.GetAttribute(i);
+		ArrayList<Double> att2 = man.GetAttribute(j);
+		double somme = 0.0;
+		for (int k = 0; k < att1.size(); k++) {
+			somme = somme + (att1.get(k)) * (att2.get(k));
+		}
+		double tmp = att1.size() * GetMean(i) * GetMean(j);
+		double correlation = (somme - tmp) / (double) ((att1.size() - 1) * GetEcartType(i) * GetEcartType(j));
+		res.add("" + (Math.round(correlation * 1e3) / 1e3));
+		if (correlation < 0 && correlation > -1) {
+			res.add("correlation negative");
+		}
+		if (correlation > 0 && correlation < 1) {
+			if (correlation <= 0.4) {
+				res.add("correlation faible");
+			}
+			if (correlation > 0.4 && correlation < 0.8) {
+				res.add("correlation moyenne");
+			}
+			if (correlation >= 0.8 && correlation <= 1) {
+				res.add("correlation forte");
+			}
+		} 
+		if(correlation>1 && correlation<-1){
+			res.add("pas de correlation");
+		}
+		return res;
+	}
+
 }

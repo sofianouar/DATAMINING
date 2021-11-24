@@ -159,6 +159,7 @@ public class ManipData {
 
 	// returns all values of a certain attribute in an arrayList
 	public ArrayList<Double> GetAttribute(int index) {
+		index--;
 		ArrayList<Double> attribute = new ArrayList<>();
 		for (int i = 0; i < this.data.size(); i++) {
 			attribute.add(this.data.get(i).get(index));
