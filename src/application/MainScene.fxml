@@ -21,6 +21,16 @@
 
 <TabPane prefHeight="727.0" prefWidth="827.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainSceneController">
    <tabs>
+      <Tab fx:id="descTab" closable="false" text="Description">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="descTextArea" layoutX="5.0" layoutY="38.0" prefHeight="647.0" prefWidth="818.0" />
+                  <Button fx:id="rdButton" layoutX="610.0" layoutY="5.0" mnemonicParsing="false" onAction="#showDesc" prefHeight="29.0" prefWidth="213.0" text="Charger / Rafraîchir" />
+                  <ProgressBar fx:id="dProgressBar" layoutX="5.0" layoutY="5.0" prefHeight="30.0" prefWidth="602.0" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
       <Tab closable="false" text="Manipulation">
          <content>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="856.0">
@@ -221,16 +231,6 @@
                   </Tab>
                </tabs>
             </TabPane>
-        </content>
-      </Tab>
-      <Tab fx:id="descTab" closable="false" text="Description">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TextArea fx:id="descTextArea" layoutX="5.0" layoutY="38.0" prefHeight="647.0" prefWidth="818.0" />
-                  <Button fx:id="rdButton" layoutX="610.0" layoutY="5.0" mnemonicParsing="false" onAction="#showDesc" prefHeight="29.0" prefWidth="213.0" text="Charger / Rafraîchir" />
-                  <ProgressBar fx:id="dProgressBar" layoutX="5.0" layoutY="5.0" prefHeight="30.0" prefWidth="602.0" />
-               </children></AnchorPane>
         </content>
       </Tab>
    </tabs>

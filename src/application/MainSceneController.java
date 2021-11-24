@@ -244,14 +244,14 @@ public class MainSceneController implements Initializable{
 			// GENERAL INFORMATIONS
 			descTextArea.appendText("\n\n ##### - Informations sur le DATASET chargé.\n\n");
 			descTextArea.appendText("###############################################################################\n");
-			descTextArea.appendText("The examined group comprised kernels belonging to three different varieties of wheat:\n"+
-					"Kama, Rosa and Canadian, 70 elements each, randomly selected for\n" +
-					"the experiment. High quality visualization of the internal kernel structure was detected\n"+
-					"using a soft X-ray technique. It is non-destructive and considerably cheaper \n"+
-					"than other more sophisticated imaging techniques like scanning microscopy or laser technology.\n"+
-					"The images were recorded on 13x18 cm X-ray KODAK plates. Studies were\n"+
-					"conducted using combine harvested wheat grain originating from experimental fields,\n"+
-					"explored at the Institute of Agrophysics of the Polish Academy of Sciences in Lublin");
+			descTextArea.appendText("Le groupe examiné comprenait des grains appartenant à trois variétés différentes de blé :\n"
+					+ " Kama, Rosa et Canadian, 70 éléments chacun, sélectionnés au hasard pour\n" + 
+					"l'expérience. Une visualisation de haute qualité de la structure interne du noyau \n"
+					+ "a été détectée à l'aide d'une technique de rayons X doux. Elle est non destructive et considérablement\n"
+					+ " moins chère que d'autres techniques d'imagerie plus sophistiquées comme la microscopie à balayage ou \n"
+					+ "la technologie laser. Les images ont été enregistrées sur des plaques KODAK à rayons X de 13x18 cm. \n"
+					+ "Des études ont été menées à l'aide de grains de blé récoltés à la moissonneuse-batteuse provenant de champs expérimentaux,\n"
+					+ " explorés à l'Institut d'agrophysique de l'Académie polonaise des sciences à Lublin.\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
 			descTextArea.appendText("###############################################################################\n");
@@ -314,8 +314,32 @@ public class MainSceneController implements Initializable{
 			dProgressBar.setProgress(1);
 		}catch(Exception e){
 			descTextArea.setText("###############################################################################\n");
+			dProgressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 			descTextArea.appendText("Informations générales sur le Seeds data set.\n");
 			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Le groupe examiné comprenait des grains appartenant à trois variétés différentes de blé :\n"
+					+ " Kama, Rosa et Canadian, 70 éléments chacun, sélectionnés au hasard pour\n" + 
+					"l'expérience. Une visualisation de haute qualité de la structure interne du noyau \n"
+					+ "a été détectée à l'aide d'une technique de rayons X doux. Elle est non destructive et considérablement\n"
+					+ " moins chère que d'autres techniques d'imagerie plus sophistiquées comme la microscopie à balayage ou \n"
+					+ "la technologie laser. Les images ont été enregistrées sur des plaques KODAK à rayons X de 13x18 cm. \n"
+					+ "Des études ont été menées à l'aide de grains de blé récoltés à la moissonneuse-batteuse provenant de champs expérimentaux,\n"
+					+ " explorés à l'Institut d'agrophysique de l'Académie polonaise des sciences à Lublin.\n");
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Liste des attributs\n");
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("Attribut 1: zone A\n");
+			descTextArea.appendText("Attribut 2: périmètre P\n");
+			descTextArea.appendText("Attribut 3: compacité c\n");
+			descTextArea.appendText("Attribut 4: longueur du noyau\n");
+			descTextArea.appendText("Attribut 5: largeur du noyau\n");
+			descTextArea.appendText("Attribut 6: coefficient d'asymétrie\n");
+			descTextArea.appendText("Attribut 7: longueur de la rainure du noyau\n");
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
+			descTextArea.appendText("###############################################################################\n");
+
 			ManipData manip = new ManipData();
 			manip.setData(manip.indDataToArrayData(indDataset));
 			ArrayList<ArrayList<String>> dict = manip.DataDesc();
@@ -327,7 +351,7 @@ public class MainSceneController implements Initializable{
 			}
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
-			descTextArea.appendText("\nAucun data set chargé!\n\n");
+			descTextArea.appendText("\nVeuillez charger le data set pour avoir plus d'informations!\n\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
 		}
