@@ -14,7 +14,7 @@ public class main {
 		System.out.println("Reading dataset ...");
 
 		ManipData manip = new ManipData();
-		String path = "\\ressources\\test.txt";
+		String path = "\\ressources\\seeds_dataset.txt";
 		ArrayList<ArrayList<Double>> dataset = new ArrayList<>();
 		dataset = manip.OpenTxtFile(path);
 		//manip.setData(dataset);
@@ -44,24 +44,29 @@ public class main {
 		CentralTendencyM metrics = new CentralTendencyM();
 		metrics.setDataset(dataset);
 		metrics.setAttribute(manip.GetAttribute(choice));
-		System.out.print("Median : " + metrics.GetMedian() + "\n");
-		System.out.print("Mode : " +metrics.GetMode()+"\n");
 		System.out.print("Mean : " + metrics.GetMean() + "\n");
 		System.out.print("Enter pourcentage (1-100%) to calculate trimmed mean : ");
-		int prcentage = sc.nextInt();
+		//int prcentage = sc.nextInt();
+		int prcentage=10;
 		System.out.print("Trimmed mean : " + metrics.GetTrMean(prcentage) + "\n");
-		System.out.print("Min : " + metrics.GetQ0() + "\n");
-		System.out.print("Max : " + metrics.GetQ4() + "\n");
-		System.out.print("Etendue : " + metrics.GetEtendu() + "\n");
+		System.out.print("Median : " + metrics.GetMedian() + "\n");
+		System.out.print("Mode : " +metrics.GetMode()+"\n");
 		System.out.print("MidRange : " + metrics.GetMidRange() + "\n");
+		System.out.print("Min : " + metrics.GetQ0() + "\n");
 		System.out.print("Q1 : " + metrics.GetQ1() + "\n");
 		System.out.print("Q3 : " + metrics.GetQ3() + "\n");
+		System.out.print("Max : " + metrics.GetQ4() + "\n");
+		System.out.print("Etendue : " + metrics.GetEtendu() + "\n");
+		
 		System.out.print("Ecart interquartile : " + metrics.GetIQR() + "\n");
 		System.out.print("Outliers : \n    -MinValue = " + metrics.GetOutliersMin() + " \n    -MaxValue = "
 				+ metrics.GetOutliersMax() + "\n");
-		System.out.print("Ecart type : " + metrics.GetEcartType() + "\n");
 		System.out.print("Variance : " + metrics.GetVariance() + "\n");
-		System.out.print("output  : " + manip.DataDesc() + "\n");
+
+		System.out.print("Ecart type : " + metrics.GetEcartType() + "\n");
+		System.out.print("Résumé des 5 nombres : " + manip.SetResume(metrics.GetQ0(), metrics.GetQ1(), metrics.GetMedian(), metrics.GetQ3(), metrics.GetQ4())+ "\n");
+		System.out.print("desc : " + manip.DataDesc()+"\n");
+
 		System.out.print("\n##END## ");
 
 	}

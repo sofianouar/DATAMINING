@@ -295,11 +295,17 @@ public class ManipData {
 				output.add(tmp);
 			
 			}
+			
+			//nombre d'instances par classe 
+		
+
+			attribute=GetAttribute(8);
+			
 			tmp = new ArrayList<>();
 			tmp.add("Class ");
-			tmp.add("1 : cama");
-			tmp.add("2 : rosa");
-			tmp.add("3  : canadian");
+			tmp.add("1 : cama avec "+Collections.frequency(attribute,1.0 )+" instances");
+			tmp.add("2 : rosa avec "+Collections.frequency(attribute, 2.0)+" instances");
+			tmp.add("3  : canadian avec "+Collections.frequency(attribute, 3.0)+" instances");
 			tmp.add("variable qualitative discréte ");
 			output.add(tmp);
 			return output;
