@@ -159,7 +159,6 @@ public class ManipData {
 
 	// returns all values of a certain attribute in an arrayList
 	public ArrayList<Double> GetAttribute(int index) {
-		index--;
 		ArrayList<Double> attribute = new ArrayList<>();
 		for (int i = 0; i < this.data.size(); i++) {
 			attribute.add(this.data.get(i).get(index));
@@ -170,8 +169,6 @@ public class ManipData {
 	// returns all values of att1 and att2 in an arrayList<arrayList> (index
 	// 0=att1,index1=att2)
 	public ArrayList<ArrayList<Double>> GetAttribute(int index1, int index2) {
-		index1--;
-		index2--;
 		ArrayList<Double> attribute1 = new ArrayList<>();
 		ArrayList<Double> attribute2 = new ArrayList<>();
 		ArrayList<ArrayList<Double>> attributes = new ArrayList<>();
@@ -263,44 +260,25 @@ public class ManipData {
 			ArrayList<Double> attribute = new ArrayList<>();
 			ArrayList<String> att = new ArrayList<>();
 			att.add("zone A");
-			att.add("p�rim�tre P");
-			att.add("compacit� c");
+			att.add("périmètre P");
+			att.add("compacité c");
 			att.add("longueur du noyau");
 			att.add("largeur du noyau");
-			att.add("coefficient d'asym�trie");
-			att.add(" longueur de la rainure du noyau");
-	
+			att.add("coefficient d'asymétrie");
+			att.add("longueur de la rainure du noyau");
 
 			ArrayList<String> tmp;
 			tmp = new ArrayList<>();
-			tmp.add("Nombre d'instances = "+this.data.size());
-			output.add(tmp);
-			tmp = new ArrayList<>();
 			tmp.add(("Nombre d'attributs = 7"));
 			output.add(tmp);
-			tmp = new ArrayList<>();
-			tmp.add(("Types d'attributs : attributs � valeurs r�elles"));
 			output.add(tmp);
 
-			for (int i = 0; i < this.data.get(0).size()-1; i++) {
-
-				attribute=GetAttribute(i+1);
-
-				tmp = new ArrayList<>();
-				Collections.sort(attribute);
-				tmp.add("Attribute "+(i+1)+" : "+att.get(i));
-				tmp.add(attribute.get(0).toString());
-				tmp.add(attribute.get(attribute.size()-1).toString());
-				tmp.add("variable quantitative continue ");
-				output.add(tmp);
-			
-			}
 			tmp = new ArrayList<>();
 			tmp.add("Class ");
 			tmp.add("1 : cama");
 			tmp.add("2 : rosa");
 			tmp.add("3  : canadian");
-			tmp.add("variable qualitative discr�te ");
+			tmp.add("variable qualitative discrète ");
 			output.add(tmp);
 			return output;
 		}

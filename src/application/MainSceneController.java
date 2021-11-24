@@ -29,7 +29,7 @@ import javax.swing.*;
 
 public class MainSceneController implements Initializable{
 	@FXML
-	ComboBox<String> attributeComboBox = new ComboBox<>();
+	ComboBox<String> attributeComboBox;
 	@FXML
 	private Label hintLabel;
 	@FXML
@@ -164,8 +164,21 @@ public class MainSceneController implements Initializable{
 	private Button rdButton;
 	@FXML
 	private ProgressBar dProgressBar;
+	@FXML
+	private TextField covTextField;
+	@FXML
+	private TextField rTextField;
+	@FXML
+	private ComboBox<String> atr1RComboBox;
+	@FXML
+	private ComboBox<String> atr2RComboBox;
+	@FXML
+	private Label covLabel;
+	@FXML
+	private Label rLabel;
 
-	DefaultBoxAndWhiskerXYDataset boxPlotDataSet = new DefaultBoxAndWhiskerXYDataset("");
+
+
 
 	private ToggleGroup histChoice = new ToggleGroup();
 	private String path;
@@ -190,6 +203,10 @@ public class MainSceneController implements Initializable{
 		visAtrComboBox.setItems(options);
 		atr1ScatterPlotComboBox.setItems(options);
 		atr2ScatterPlotComboBox.setItems(options);
+		atr1RComboBox.setItems(options);
+		atr2RComboBox.setItems(options);
+		atr1RComboBox.getSelectionModel().selectFirst();
+		atr2RComboBox.getSelectionModel().selectLast();
 		attributeComboBox.getSelectionModel().selectFirst();
 		visAtrComboBox.getSelectionModel().selectFirst();
 		atr1ScatterPlotComboBox.getSelectionModel().selectFirst();
@@ -222,10 +239,10 @@ public class MainSceneController implements Initializable{
 	// SHOWDESC DESCRIBE THE DATA SET
 	public void showDesc(){
 		try{
+			descTextArea.setText("###############################################################################\n");
 			dProgressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 			// GENERAL INFORMATIONS
-			descTextArea.setText("");
-			descTextArea.appendText("Data Set Information:\n");
+			descTextArea.appendText("\n\n ##### - Informations sur le DATASET chargé.\n\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("The examined group comprised kernels belonging to three different varieties of wheat:\n"+
 					"Kama, Rosa and Canadian, 70 elements each, randomly selected for\n" +
@@ -296,7 +313,23 @@ public class MainSceneController implements Initializable{
 			}
 			dProgressBar.setProgress(1);
 		}catch(Exception e){
-			descTextArea.setText("Vous n'avez sélectionné aucun Data set!");
+			descTextArea.setText("###############################################################################\n");
+			descTextArea.appendText("Informations générales sur le Seeds data set.\n");
+			descTextArea.appendText("###############################################################################\n");
+			ManipData manip = new ManipData();
+			manip.setData(manip.indDataToArrayData(indDataset));
+			ArrayList<ArrayList<String>> dict = manip.DataDesc();
+			for(ArrayList<String> item: dict){
+				descTextArea.appendText("----------------------------------------------------------------------------\n");
+				for(String line:item){
+					descTextArea.appendText(line+"\n");
+				}
+			}
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("\nAucun data set chargé!\n\n");
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
 		}
 	}
 
@@ -466,7 +499,7 @@ public class MainSceneController implements Initializable{
 			hist.getData().add(new XYChart.Data<String, Number>(String.valueOf(visited.get(categoryIndex)), freq.get(categoryIndex)));
 		}
 		barChart.getData().setAll(hist);
-		barChart.setTitle("Some Programming Languages");
+		barChart.setTitle("Histogramme");
 	}
 
 	// ALOW US TO SEARCH FOR THE DATA SET
@@ -660,8 +693,8 @@ public class MainSceneController implements Initializable{
 		try {
 			hintLabel.setText("");
 			outliersTextArea.setText("");
-			modLabel.setText("Modalité: ");
-			symLabel.setText("Symétrie: ");
+			modLabel.setText("# - Modalité: ");
+			symLabel.setText("# - Symétrie: ");
 			CentralTendencyM metrics = new CentralTendencyM();
 			manip.setData(manip.indDataToArrayData(indDataset));
 			metrics.setAttribute(manip.GetAttribute(attributeComboBox.getSelectionModel().getSelectedIndex()));
@@ -674,68 +707,78 @@ public class MainSceneController implements Initializable{
 			 // DESCRIBE THE MODALITY
 			switch(metrics.GetMode().size()-1){
 				case 1:
-					modLabel.setText("Modalité: Unimodale");
+					modLabel.setText("# - Modalité: Unimodale.");
 					break;
 				case 2:
-					modLabel.setText("Modalité: Bimodale");
+					modLabel.setText("# - Modalité: Bimodale.");
 					break;
 				case 3:
-					modLabel.setText("Modalité: Trimodale");
+					modLabel.setText("# - Modalité: Trimodale.");
 					break;
 				default:
-					modLabel.setText("Modalité: Pas de Mode");
+					modLabel.setText("# - Modalité: Pas de Mode.");
 			}
 			trMeanTextField.setText(Double.toString(metrics.GetTrMean(Integer.parseInt(pourcentTextField.getText()))));
-			eqartTextField.setText(Double.toString(metrics.GetEcartType()));
+			ecartTypeTextField.setText(Double.toString(metrics.GetEcartType()));
 			varTextField.setText(Double.toString(metrics.GetVariance()));
-			ecartTypeTextField.setText(Double.toString(metrics.GetIQR()));
+			eqartTextField.setText(Double.toString(metrics.GetIQR()));
 			etenduTextField.setText(Double.toString(metrics.GetEtendu()));
 			midTextField.setText(Double.toString(metrics.GetMidRange()));
 			q1TextField.setText(Double.toString(metrics.GetQ1()));
-			q3TextField.setText(Double.toString(metrics.GetQ3()));
+			q3TextField.setText(String.format("%.2f",metrics.GetQ3()));
 			outMinTextField.setText(Double.toString(metrics.GetOutliersMin()));
 			outMaxTextField.setText(Double.toString(metrics.GetOutliersMax()));
 			minTextField.setText(Double.toString(metrics.GetQ0()));
 			maxTextField.setText(Double.toString(metrics.GetQ4()));
 			// DESCRIBE THE SYMMETRY
-			//Boolean sym = true;
 			double temp = 0;
 			for(Double d : metrics.GetMode()){
-				//if(((int)(double)d != (int)metrics.GetMean())||((int)(double)d != (int)metrics.GetMedian())){
-					//sym = false;
-				//}
 				temp+=d;
 			}
 			if(metrics.GetMode().size()-1==1){
+
 				double d = metrics.GetMode().get(0);
-				if(((int)(double)d == (int)metrics.GetMean())&&((int)(double)d == (int)metrics.GetMedian())){
-					symLabel.setText("Symétrie");
-				}else if(metrics.GetMean()<=metrics.GetMedian() && metrics.GetMedian() <= d){
-					symLabel.setText("Symétrie: Négative");
-				}else if(d>=metrics.GetMedian() && metrics.GetMedian()>=metrics.GetMean()){
-					symLabel.setText("Symétrie: Positive");
+				if(Math.round(d) == Math.round(metrics.GetMean())&& Math.round(metrics.GetMean()) == Math.round(metrics.GetMedian())){
+					symLabel.setText("# - La distribution des données\n est symétrique.");
 				}else{
-					symLabel.setText("Pas de symétrie");
+					symLabel.setText("# - La distribution des données\n est légèrement asymétrique.");
 				}
-			}else{
+			}else {
 				temp = temp / (metrics.GetMode().size() - 1);
-				if(metrics.GetMean()<=metrics.GetMedian() && metrics.GetMedian() <= temp){
-					symLabel.setText("Symétrie: Négative");
-				}else if(temp>=metrics.GetMedian() && metrics.GetMedian()>=metrics.GetMean()){
-					symLabel.setText("Symétrie: Positive");
-				}else{
-					symLabel.setText("Pas de symétrie");
+				modeTextField.setText(modeTextField.getText() + " -- Moy --" + temp);
+				if (Math.round(temp) == Math.round(metrics.GetMean()) && Math.round(metrics.GetMean()) == Math.round(metrics.GetMedian())) {
+					symLabel.setText("# - La distribution des données\n est symétrique.");
+				} else {
+					symLabel.setText("# - La distribution des données\nest légèrement asymétrique.");
 				}
 			}
+
+
 		// DETERMINE THE OUTLIERS
 		for(int i=0; i<metrics.getAttribute().size(); i++){
 			if(metrics.getAttribute().get(i)>metrics.GetOutliersMax() || metrics.getAttribute().get(i)<metrics.GetOutliersMin()){
 				outliersTextArea.appendText(", "+String.valueOf(metrics.getAttribute().get(i)));
 			}
 		}
+		// Be sure the variable aren't the same
+		int i = atr1RComboBox.getSelectionModel().getSelectedIndex();
+		int j = atr2RComboBox.getSelectionModel().getSelectedIndex();
+		if(i!=j){
+			ArrayList<String> r;
+			metrics.setDataset(manip.indDataToArrayData(indDataset));
+			r = metrics.GetCorrelation(i, j);
+			// COV AND R CALCULATIONS
+			covTextField.setText(String.valueOf(metrics.GetCoVariance(i, j)));
+			rTextField.setText(r.get(0));
+			rLabel.setText(r.get(1));
+		}else{
+			rTextField.setText("-");
+			covTextField.setText("-");
+		}
 		} catch(NumberFormatException e) {
 			hintLabel.setText("La case du pourcentage doit etre remplie");
 		} catch(Exception e) {
+			//e.printStackTrace();
 			hintLabel.setText("Insuffisant pour lancer les calculs!");
 		}
 	}

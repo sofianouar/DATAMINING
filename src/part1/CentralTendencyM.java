@@ -211,6 +211,7 @@ public class CentralTendencyM {
 
 //calcul Ecart interquartile*****************************
 	public double GetIQR() {
+		System.out.println(this.GetQ3() + " " + this.GetQ1());
 		return Math.round((this.GetQ3() - this.GetQ1()) * 1e3) / 1e3;
 	}
 
@@ -293,7 +294,7 @@ public class CentralTendencyM {
 		return Math.round(somme * 1e3) / 1e3;
 	}
 
-	// calcul covariance*******************************************
+	// Calcul de corrélation*******************************************
 	public ArrayList<String> GetCorrelation(int i, int j) {
 		ArrayList<String> res = new ArrayList<>();
 		ManipData man = new ManipData(this.dataset);
@@ -313,10 +314,10 @@ public class CentralTendencyM {
 			if (correlation <= 0.4) {
 				res.add("correlation faible");
 			}
-			if (correlation > 0.4 && correlation < 0.8) {
+			if (correlation > 0.4 && correlation < 0.9) {
 				res.add("correlation moyenne");
 			}
-			if (correlation >= 0.8 && correlation <= 1) {
+			if (correlation >= 0.9 && correlation <= 1) {
 				res.add("correlation forte");
 			}
 		} 
