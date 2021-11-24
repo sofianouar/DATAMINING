@@ -21,7 +21,7 @@
 
 <TabPane prefHeight="727.0" prefWidth="827.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainSceneController">
    <tabs>
-      <Tab closable="false" text="Manipulations">
+      <Tab closable="false" text="Manipulation">
          <content>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="856.0">
                <children>

@@ -486,6 +486,7 @@ public class MainSceneController implements Initializable{
 			initDatasetTableView();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			hintLabel.setText("Erreur lors de l'ouverture du fichier");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

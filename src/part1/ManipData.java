@@ -43,7 +43,7 @@ public class ManipData {
 	public ArrayList<ArrayList<Double>> OpenTxtFile(String path) throws IOException {
 		// Decalarations
 		// islam modifs
-		//String currentDirectory = new File("").getAbsolutePath();
+		String currentDirectory = new File("").getAbsolutePath();
 		int c = 0;
 		String[] splitRow;
 		ArrayList<Double> one_line = new ArrayList<>(); // contains all attributes of one specific line
@@ -256,6 +256,52 @@ public class ManipData {
 		return _array;
 	}
 	
+	// data description
+		public ArrayList<ArrayList<String>> DataDesc() {
+			ArrayList<ArrayList<String>> output = new ArrayList<>();
+			ArrayList<Double> attribute = new ArrayList<>();
+			ArrayList<String> att = new ArrayList<>();
+			att.add("zone A");
+			att.add("p�rim�tre P");
+			att.add("compacit� c");
+			att.add("longueur du noyau");
+			att.add("largeur du noyau");
+			att.add("coefficient d'asym�trie");
+			att.add(" longueur de la rainure du noyau");
 	
+
+			ArrayList<String> tmp;
+			tmp = new ArrayList<>();
+			tmp.add("Nombre d'instances = "+this.data.size());
+			output.add(tmp);
+			tmp = new ArrayList<>();
+			tmp.add(("Nombre d'attributs = 7"));
+			output.add(tmp);
+			tmp = new ArrayList<>();
+			tmp.add(("Types d'attributs : attributs � valeurs r�elles"));
+			output.add(tmp);
+
+			for (int i = 0; i < this.data.get(0).size()-1; i++) {
+
+				attribute=GetAttribute(i+1);
+
+				tmp = new ArrayList<>();
+				Collections.sort(attribute);
+				tmp.add("Attribute "+(i+1)+" : "+att.get(i));
+				tmp.add(attribute.get(0).toString());
+				tmp.add(attribute.get(attribute.size()-1).toString());
+				tmp.add("variable quantitative continue ");
+				output.add(tmp);
+			
+			}
+			tmp = new ArrayList<>();
+			tmp.add("Class ");
+			tmp.add("1 : cama");
+			tmp.add("2 : rosa");
+			tmp.add("3  : canadian");
+			tmp.add("variable qualitative discr�te ");
+			output.add(tmp);
+			return output;
+		}
 
 }

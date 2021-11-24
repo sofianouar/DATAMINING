@@ -61,6 +61,7 @@ public class main {
 				+ metrics.GetOutliersMax() + "\n");
 		System.out.print("Ecart type : " + metrics.GetEcartType() + "\n");
 		System.out.print("Variance : " + metrics.GetVariance() + "\n");
+		System.out.print("output  : " + manip.DataDesc() + "\n");
 		System.out.print("\n##END## ");
 
 	}
