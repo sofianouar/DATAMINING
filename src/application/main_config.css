@@ -906,6 +906,10 @@ VBox > .split-menu-button.last > .arrow-button {
 	-fx-background-color: #50c0e2;
 }
 
+.text-area:centered .text {
+    -fx-text-alignment: center ;
+}
+
 /*******************************************************************************
  *                                                                             *
  * Slider                                                                      *

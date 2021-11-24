@@ -64,7 +64,7 @@ public class CentralTendencyM {
 		return Math.round((1 / (double) (this.attribute.size() - 2 * k) * somme) * 1e3) / 1e3;
 	}
 
-	// médiane
+	// mï¿½diane
 	public double GetMedian() {
 		ArrayList<Double> data = new ArrayList<>();
 		data = this.attribute;
@@ -99,33 +99,33 @@ public class CentralTendencyM {
 		// type de modalitee
 		if (count == 1) {// System.out.print("unimodal "+ 1);
 			mode.add((double) count);
-			System.out.print("Type de modalité : unimodal \n");
+			System.out.print("Type de modalitï¿½ : unimodal \n");
 		}
 
 		if (count == 2) { // System.out.print("bimodale "+2);
 			mode.add((double) count);
-			System.out.print("Type de modalité : bimodal \n");
+			System.out.print("Type de modalitï¿½ : bimodal \n");
 		}
 		if (count == 3) { // System.out.print("trimodale "+3);
 			mode.add((double) count);
-			System.out.print("Type de modalité : trimodal \n");
+			System.out.print("Type de modalitï¿½ : trimodal \n");
 		} 
 		if(count>3){ // System.out.print("pas de mode "+0);
 			mode.add((double) count);
-			System.out.print("Type de modalité : pas de mode \n");
+			System.out.print("Type de modalitï¿½ : pas de mode \n");
 		}
 
 		return mode;
 	}
 
-	// l'étendue
+	// l'ï¿½tendue
 
-	// milieu de l'étendue
+	// milieu de l'ï¿½tendue
 	public double GetMidRange() {
 		return Math.round(((this.GetQ4() + this.GetQ0()) / 2.0) * 1e3) / 1e3;
 	}
 
-	// déduire les symétries
+	// dï¿½duire les symï¿½tries
 	public void DedSym(double mean, double median, double mode) {
 
 		if (mean == median & median == mode)
@@ -218,7 +218,7 @@ public class CentralTendencyM {
 	public double GetOutliersMin() {
 		// Q1 - 1.5 * IQR
 		double outMin = this.GetQ1() - (1.5 * this.GetIQR());
-
+		System.out.println(this.GetQ1() + " | " + this.GetIQR());
 		return Math.round(outMin * 1e3) / 1e3;
 
 	}

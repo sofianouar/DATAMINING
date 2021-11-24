@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="610.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainSceneController">
+   <children>
+      <Button layoutX="15.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Desciption" />
+      <Line endX="665.0" layoutX="115.0" layoutY="57.0" startX="-100.0" />
+      <Label layoutX="72.0" layoutY="107.0" text="Histogramme" />
+      <ComboBox fx:id="visAtrComboBox" layoutX="40.0" layoutY="197.0" prefWidth="150.0" />
+      <Label layoutX="90.0" layoutY="182.0" text="Attribut" />
+      <BarChart fx:id="barChart" layoutX="397.0" layoutY="60.0" prefHeight="259.0" prefWidth="386.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <RadioButton fx:id="singletonBucketsRadioButton" layoutX="46.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadBarChart" text="Singleton buckets" />
+      <RadioButton fx:id="uniformWidthRadioButton" layoutX="46.0" layoutY="157.0" mnemonicParsing="false" text="Uniform width" />
+   </children>
+</AnchorPane>
