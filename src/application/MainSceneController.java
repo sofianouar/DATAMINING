@@ -21,7 +21,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jfree.data.statistics.DefaultBoxAndWhiskerXYDataset;
 import part1.CentralTendencyM;
 import part1.Individu;
 import part1.ManipData;
@@ -176,9 +175,6 @@ public class MainSceneController implements Initializable{
 	private Label covLabel;
 	@FXML
 	private Label rLabel;
-
-
-
 
 	private ToggleGroup histChoice = new ToggleGroup();
 	private String path;
@@ -625,7 +621,7 @@ public class MainSceneController implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(path);
+		//System.out.println(path);
 	}
 	
 	public void displayInd() {
@@ -720,6 +716,7 @@ public class MainSceneController implements Initializable{
 			modLabel.setText("# - Modalité: ");
 			symLabel.setText("# - Symétrie: ");
 			CentralTendencyM metrics = new CentralTendencyM();
+			manip = new ManipData();
 			manip.setData(manip.indDataToArrayData(indDataset));
 			metrics.setAttribute(manip.GetAttribute(attributeComboBox.getSelectionModel().getSelectedIndex()));
 			medTextField.setText(Double.toString(metrics.GetMedian()));
@@ -785,20 +782,21 @@ public class MainSceneController implements Initializable{
 			}
 		}
 		// Be sure the variable aren't the same
+		ManipData manip1 = new ManipData();
+		manip1.setData(manip1.indDataToArrayData(indDataset));
+		CentralTendencyM metrics1 = new CentralTendencyM();
+		metrics1.setDataset(manip1.indDataToArrayData(indDataset));
+		//metrics1.setAttribute(manip1.GetAttribute(atr1RComboBox.getSelectionModel().getSelectedIndex()));
 		int i = atr1RComboBox.getSelectionModel().getSelectedIndex();
 		int j = atr2RComboBox.getSelectionModel().getSelectedIndex();
-		if(i!=j){
-			ArrayList<String> r;
-			metrics.setDataset(manip.indDataToArrayData(indDataset));
-			r = metrics.GetCorrelation(i, j);
-			// COV AND R CALCULATIONS
-			covTextField.setText(String.valueOf(metrics.GetCoVariance(i, j)));
-			rTextField.setText(r.get(0));
-			rLabel.setText(r.get(1));
-		}else{
-			rTextField.setText("-");
-			covTextField.setText("-");
-		}
+
+		ArrayList<String> r;
+		r = metrics1.GetCorrelation(i, j);
+		// COV AND R CALCULATIONS
+		covTextField.setText(String.valueOf(metrics1.GetCoVariance(i, j)));
+		rTextField.setText(r.get(0));
+		rLabel.setText(r.get(1));
+
 		} catch(NumberFormatException e) {
 			hintLabel.setText("La case du pourcentage doit etre remplie");
 		} catch(Exception e) {

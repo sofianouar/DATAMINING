@@ -14,7 +14,7 @@ public class main {
 		System.out.println("Reading dataset ...");
 
 		ManipData manip = new ManipData();
-		String path = "ressources\\seeds_dataset.txt";
+		String path = "ressources/seeds_dataset.txt";
 		ArrayList<ArrayList<Double>> dataset = new ArrayList<>();
 		dataset = manip.OpenTxtFile(path);
 		//manip.setData(dataset);
@@ -64,6 +64,7 @@ public class main {
 		System.out.print("output  : " + manip.DataDesc() + "\n");
 		System.out.print("covar  : " + metrics.GetCoVariance(1, 2) + "\n");
 		System.out.print("correlation  : " + metrics.GetCorrelation(1, 2) + "\n");
+		System.out.print("correlation  : " + metrics.GetCorrelation(1, 3) + "\n");
 
 		System.out.print("\n##END## ");
 

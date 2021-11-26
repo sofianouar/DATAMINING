@@ -72,7 +72,6 @@ public class CentralTendencyM {
 		Collections.sort(this.attribute);
 		for (int i = k; i < this.attribute.size() - k; i++) {
 			somme = somme + this.attribute.get(i);
-
 		}
 		return Math.round((1 / (double) (this.attribute.size() - 2 * k) * somme) * 1e3) / 1e3;
 	}
@@ -262,7 +261,8 @@ public class CentralTendencyM {
 
 		double ect;
 		double somme = 0;
-		double mean = this.GetMean();
+		// double mean = this.GetMean();
+		double mean = this.GetMean(index);
 
 		for (int i = 0; i < attribute.size(); i++) {
 			somme = somme + (Math.pow(attribute.get(i) - mean, 2));
@@ -273,9 +273,7 @@ public class CentralTendencyM {
 
 //calcul variance*******************************************
 	public double GetVariance() {
-
 		return Math.round(Math.pow(this.GetEcartType(), 2) * 1e3) / 1e3;
-
 	}
 
 	// calcul covariance*******************************************
@@ -303,6 +301,7 @@ public class CentralTendencyM {
 		double somme = 0.0;
 		for (int k = 0; k < att1.size(); k++) {
 			somme = somme + (att1.get(k)) * (att2.get(k));
+			//System.out.println("attribute1: "+  att1.get(k) + "attribut2: "+ att2.get(k));
 		}
 		double tmp = att1.size() * GetMean(i) * GetMean(j);
 		double correlation = (somme - tmp) / (double) ((att1.size() - 1) * GetEcartType(i) * GetEcartType(j));
