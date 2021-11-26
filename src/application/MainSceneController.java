@@ -252,7 +252,7 @@ public class MainSceneController implements Initializable{
 			descTextArea.appendText("\n###############################################################################\n");
 			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
 			descTextArea.appendText("###############################################################################\n");
-			descTextArea.appendText("Nombre d'attributs = "+ 7+" + 1(classe)\n");
+			descTextArea.appendText("Nombre d'attributs = "+ 7+"\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Données manquantes = 0\n");
 			// THE NUMBER OF BINS TO CREATE
@@ -280,11 +280,11 @@ public class MainSceneController implements Initializable{
 				dataClasses.add(_class);
 			}
 			// Display informations about the class
-			descTextArea.appendText("# Class\n");
+			descTextArea.appendText("\n# Classes:\n");
 			descTextArea.appendText("- 1 : cama\n");
 			descTextArea.appendText("- 2 : rosa\n");
-			descTextArea.appendText("- 3  : canadian\n\n");
-			descTextArea.appendText("* Variable qualitative discrète *\n");
+			descTextArea.appendText("- 3  : canadian");
+			descTextArea.appendText("* Variable qualitative discrète *\n\n");
 			// DISPLAY THE NUMBER OF INSTANCE FOR EACH CLASS
 			for(int i=0; i<classValues.size(); i++){
 				descTextArea.appendText("Class "+(int)(double)classValues.get(i)+ ": -- Nombre d'instances -- : "+ dataClasses.get(i).size()+
@@ -327,11 +327,12 @@ public class MainSceneController implements Initializable{
 				descTextArea.appendText("----------------------------------------------------------------------------\n");
 			}
 
+			
 			descTextArea.appendText("\n###############################################################################\n\n");
-
+			descTextArea.appendText("Valeurs possibles pour chaque attribut: \n\n");
 			// DISPLAY THE VALUES THAT THE ATTRIBUTES CAN TAKE
 			for(int i=0; i<=6; i++){
-				descTextArea.appendText("Attribut: "+options.get(i)+"\n");
+				descTextArea.appendText("# Attribut: "+options.get(i)+"\n");
 				descTextArea.appendText("----------------------------------------------------------------------------\n");
 				ArrayList<ArrayList<Double>> frequencies = new ArrayList<ArrayList<Double>>();
 				frequencies = manip.GetFrequencies(manip.GetAttribute(i));
