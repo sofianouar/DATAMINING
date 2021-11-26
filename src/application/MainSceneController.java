@@ -252,6 +252,8 @@ public class MainSceneController implements Initializable{
 			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Nombre d'attributs = "+ 7+" + 1(classe)\n");
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Données manquantes = 0\n");
 			// THE NUMBER OF BINS TO CREATE
 			descTextArea.appendText("###############################################################################\n");
 			// OBTAIN ALL THE CLASS VALUES
@@ -334,6 +336,8 @@ public class MainSceneController implements Initializable{
 			descTextArea.appendText("Attribut 7: longueur de la rainure du noyau\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Données manquantes = 0\n");
 			descTextArea.appendText("###############################################################################\n");
 
 			ManipData manip = new ManipData();
@@ -739,7 +743,6 @@ public class MainSceneController implements Initializable{
 				default:
 					modLabel.setText("# - Modalité: Pas de Mode.");
 			}
-			trMeanTextField.setText(Double.toString(metrics.GetTrMean(Integer.parseInt(pourcentTextField.getText()))));
 			ecartTypeTextField.setText(Double.toString(metrics.GetEcartType()));
 			varTextField.setText(Double.toString(metrics.GetVariance()));
 			eqartTextField.setText(Double.toString(metrics.GetIQR()));
@@ -797,10 +800,15 @@ public class MainSceneController implements Initializable{
 		rTextField.setText(r.get(0));
 		rLabel.setText(r.get(1));
 
+		// TRIMMED MEAN CALCULATION
+		if(pourcentTextField.getText() != null && !pourcentTextField.getText().trim().isEmpty())
+			trMeanTextField.setText(Double.toString(metrics.GetTrMean(Integer.parseInt(pourcentTextField.getText().replaceAll("\\s", "")))));
+
 		} catch(NumberFormatException e) {
-			hintLabel.setText("La case du pourcentage doit etre remplie");
+			hintLabel.setText("Vous devez entrer un nombre entier pour le pourcentage!");
+			trMeanTextField.setText("");
 		} catch(Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			hintLabel.setText("Insuffisant pour lancer les calculs!");
 		}
 	}

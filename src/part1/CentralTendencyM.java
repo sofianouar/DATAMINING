@@ -309,14 +309,14 @@ public class CentralTendencyM {
 		if (correlation < 0 && correlation > -1) {
 			res.add("correlation negative");
 		}
-		if (correlation > 0 && correlation < 1) {
+		if (correlation > 0 && correlation <= 1.1) {
 			if (correlation <= 0.4) {
 				res.add("correlation faible");
 			}
 			if (correlation > 0.4 && correlation < 0.9) {
 				res.add("correlation moyenne");
 			}
-			if (correlation >= 0.9 && correlation <= 1) {
+			if (correlation >= 0.9 && correlation <= 1.1) {
 				res.add("correlation forte");
 			}
 		} 

@@ -112,7 +112,7 @@
                   <Label layoutX="488.0" layoutY="592.0" text="Mediane" />
                   <Label layoutX="410.0" layoutY="635.0" text="Mode" />
                   <Label layoutX="310.0" layoutY="590.0" prefHeight="18.0" prefWidth="60.0" text="Moyenne" />
-                  <Label layoutX="204.0" layoutY="451.0" prefHeight="17.0" prefWidth="52.0" text="tr-Mean" textFill="RED" />
+                  <Label layoutX="204.0" layoutY="414.0" prefHeight="54.0" prefWidth="52.0" text="tr-Mean" textFill="RED" />
                   <Label alignment="CENTER" layoutX="639.0" layoutY="634.0" prefHeight="17.0" prefWidth="50.0" text="MIN" />
                   <Label layoutX="720.0" layoutY="634.0" prefHeight="17.0" prefWidth="32.0" text="MAX" />
                   <Label alignment="CENTER" layoutX="669.0" layoutY="512.0" prefHeight="21.0" prefWidth="50.0" text="Var" />
@@ -125,7 +125,7 @@
                   <Label alignment="CENTER" layoutX="738.0" layoutY="569.0" prefHeight="17.0" prefWidth="61.0" text="IQR" />
                   <Label alignment="CENTER" layoutX="734.0" layoutY="456.0" prefHeight="23.0" prefWidth="69.0" text="Out - Min" />
                   <Label alignment="CENTER" layoutX="736.0" layoutY="512.0" prefHeight="21.0" prefWidth="69.0" text="Out - Max" />
-                  <TextField fx:id="pourcentTextField" layoutX="23.0" layoutY="405.0" prefHeight="47.0" prefWidth="164.0" promptText="Pourcentage (trimmed-mean)" />
+                  <TextField fx:id="pourcentTextField" layoutX="23.0" layoutY="405.0" prefHeight="47.0" prefWidth="164.0" promptText="tr-mean %" />
                   <ComboBox fx:id="attributeComboBox" layoutX="543.0" layoutY="405.0" prefHeight="47.0" prefWidth="124.0" />
                   <Button fx:id="startButton" defaultButton="true" layoutX="684.0" layoutY="405.0" mnemonicParsing="false" onAction="#startCalc" prefHeight="47.0" prefWidth="121.0" text="Start">
                      <font>
