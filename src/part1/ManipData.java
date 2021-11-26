@@ -274,10 +274,10 @@ public class ManipData {
 			output.add(tmp);
 
 			tmp = new ArrayList<>();
-			tmp.add("Class ");
-			tmp.add("1 : cama");
-			tmp.add("2 : rosa");
-			tmp.add("3  : canadian");
+			tmp.add("# Classes:");
+			tmp.add("- 1 : cama");
+			tmp.add("- 2 : rosa");
+			tmp.add("- 3  : canadian");
 			tmp.add("variable qualitative discrète ");
 			output.add(tmp);
 			return output;

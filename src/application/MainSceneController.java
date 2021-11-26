@@ -211,6 +211,7 @@ public class MainSceneController implements Initializable{
 		singletonBucketsRadioButton.setSelected(true);
 		uniformWidthRadioButton.setToggleGroup(histChoice);
 		dProgressBar.setProgress(0);
+		showDesc();
 	}
 
 	// THIS FUNCTION ALLOW US TO CREATE A BOXPLOT FOR EACH ATTRIBUTE
@@ -239,7 +240,7 @@ public class MainSceneController implements Initializable{
 			dProgressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 			// GENERAL INFORMATIONS
 			descTextArea.appendText("\n\n ##### - Informations sur le DATASET chargé.\n\n");
-			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("###############################################################################\n\n");
 			descTextArea.appendText("Le groupe examiné comprenait des grains appartenant à trois variétés différentes de blé :\n"
 					+ " Kama, Rosa et Canadian, 70 éléments chacun, sélectionnés au hasard pour\n" + 
 					"l'expérience. Une visualisation de haute qualité de la structure interne du noyau \n"
@@ -248,13 +249,15 @@ public class MainSceneController implements Initializable{
 					+ "la technologie laser. Les images ont été enregistrées sur des plaques KODAK à rayons X de 13x18 cm. \n"
 					+ "Des études ont été menées à l'aide de grains de blé récoltés à la moissonneuse-batteuse provenant de champs expérimentaux,\n"
 					+ " explorés à l'Institut d'agrophysique de l'Académie polonaise des sciences à Lublin.\n");
-			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("\n###############################################################################\n");
 			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Nombre d'attributs = "+ 7+" + 1(classe)\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Données manquantes = 0\n");
 			// THE NUMBER OF BINS TO CREATE
+			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("Instances que contient chaque classe:\n");
 			descTextArea.appendText("###############################################################################\n");
 			// OBTAIN ALL THE CLASS VALUES
 			ArrayList<Double>classValues = new ArrayList<Double>();
@@ -264,7 +267,6 @@ public class MainSceneController implements Initializable{
 				}
 			}
 			descTextArea.appendText("Nombre de classes = "+classValues.size()+"\n");
-			descTextArea.appendText("###############################################################################\n");
 			ArrayList<ArrayList<ArrayList<Double>>> dataClasses = new ArrayList<ArrayList<ArrayList<Double>>>();
 			ArrayList<ArrayList<Double>> _class = new ArrayList<ArrayList<Double>>();
 			// DIVIDE THE DATA BY CLASSES(KIND OF SORT)
@@ -277,24 +279,39 @@ public class MainSceneController implements Initializable{
 				}
 				dataClasses.add(_class);
 			}
+			// Display informations about the class
+			descTextArea.appendText("# Class\n");
+			descTextArea.appendText("- 1 : cama\n");
+			descTextArea.appendText("- 2 : rosa\n");
+			descTextArea.appendText("- 3  : canadian\n\n");
+			descTextArea.appendText("* Variable qualitative discrète *\n");
 			// DISPLAY THE NUMBER OF INSTANCE FOR EACH CLASS
 			for(int i=0; i<classValues.size(); i++){
 				descTextArea.appendText("Class "+(int)(double)classValues.get(i)+ ": -- Nombre d'instances -- : "+ dataClasses.get(i).size()+
 						" | -- Pourcentage -- : "+ String.format("%.2f", (double)(dataClasses.get(i).size() * 100)/manip.getData().size())+ "%\n");
 			}
-			descTextArea.appendText("###############################################################################\n");
-			// DISPLAY THE VALUES THAT THE ATTRIBUTES CAN TAKE
-			for(int i=0; i<=6; i++){
-				descTextArea.appendText("Attribut: "+options.get(i)+"\n");
-				descTextArea.appendText("----------------------------------------------------------------------------\n");
-				ArrayList<ArrayList<Double>> frequencies = new ArrayList<ArrayList<Double>>();
-				frequencies = manip.GetFrequencies(manip.GetAttribute(i));
-				for(int j=0; j<frequencies.size(); j++){
-					// CHECK IF WE ALREADY ADDED THE CURRENT ELEMENT
-					frequencies = manip.GetFrequencies(manip.GetAttribute(i));
-					descTextArea.appendText(String.format("%.3f",frequencies.get(j).get(0))+ "\t -- Nbr -- : " + (int)(double)frequencies.get(j).get(1)+  "\t -- Pourcentage -- "+ String.format("%.2f", (frequencies.get(j).get(1)*100)/indDataset.size()) +"% \t TYPE:Numérique-Quantitatif\n");
-				}
-			}
+			descTextArea.appendText("\n###############################################################################\n\n");
+			descTextArea.appendText("Liste des attributs\n\n");
+			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			CentralTendencyM temp_metrics = new CentralTendencyM();
+			ManipData temp_manip = new ManipData();
+			temp_manip.setData(temp_manip.indDataToArrayData(indDataset));
+			temp_metrics.setDataset(temp_manip.getData());
+			temp_metrics.setAttribute(temp_manip.GetAttribute(0));
+			descTextArea.appendText("Attribut 1: zone A\t\t\t\t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\t\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(1));
+			descTextArea.appendText("Attribut 2: périmètre P\t\t\t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\t\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(2));
+			descTextArea.appendText("Attribut 3: compacité c\t\t\t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(3));
+			descTextArea.appendText("Attribut 4: longueur du noyau\t\t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\t\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(4));
+			descTextArea.appendText("Attribut 5: largeur du noyau\t\t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\t\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(5));
+			descTextArea.appendText("Attribut 6: coefficient d'asymétrie \t\t\t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\tTYPE:Numérique-Quantitatif\n");
+			temp_metrics.setAttribute(temp_manip.GetAttribute(6));
+			descTextArea.appendText("Attribut 7: longueur de la rainure du noyau \t | Min = "+temp_metrics.GetQ0()+" - Max = "+temp_metrics.GetQ4()+ "|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("\n###############################################################################\n\n");
 			// REPRESENTING DATA WITH INTERVALS
 			descTextArea.appendText("Distribution par intervalles(Avec discretisation): \n");
 			ArrayList<ArrayList<Double>> bins = new ArrayList<ArrayList<Double>>();
@@ -309,13 +326,29 @@ public class MainSceneController implements Initializable{
 				}
 				descTextArea.appendText("----------------------------------------------------------------------------\n");
 			}
+
+			descTextArea.appendText("\n###############################################################################\n\n");
+
+			// DISPLAY THE VALUES THAT THE ATTRIBUTES CAN TAKE
+			for(int i=0; i<=6; i++){
+				descTextArea.appendText("Attribut: "+options.get(i)+"\n");
+				descTextArea.appendText("----------------------------------------------------------------------------\n");
+				ArrayList<ArrayList<Double>> frequencies = new ArrayList<ArrayList<Double>>();
+				frequencies = manip.GetFrequencies(manip.GetAttribute(i));
+				for(int j=0; j<frequencies.size(); j++){
+					// CHECK IF WE ALREADY ADDED THE CURRENT ELEMENT
+					frequencies = manip.GetFrequencies(manip.GetAttribute(i));
+					descTextArea.appendText(String.format("%.3f",frequencies.get(j).get(0))+ "\t -- Nbr -- : " + (int)(double)frequencies.get(j).get(1)+  "\t -- Pourcentage -- "+ String.format("%.2f", (frequencies.get(j).get(1)*100)/indDataset.size()) +"%\n");
+				}
+			}
+
 			dProgressBar.setProgress(1);
 		}catch(Exception e){
-			descTextArea.setText("###############################################################################\n");
+			descTextArea.setText("############################! Aucun dataset sélectionné !############################\n\n");
 			dProgressBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-			descTextArea.appendText("Informations générales sur le Seeds data set.\n");
+			descTextArea.appendText("# Informations générales sur le Seeds data set.\n\n");
 			descTextArea.appendText("###############################################################################\n");
-			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("###############################################################################\n\n");
 			descTextArea.appendText("Le groupe examiné comprenait des grains appartenant à trois variétés différentes de blé :\n"
 					+ " Kama, Rosa et Canadian, 70 éléments chacun, sélectionnés au hasard pour\n" + 
 					"l'expérience. Une visualisation de haute qualité de la structure interne du noyau \n"
@@ -323,37 +356,36 @@ public class MainSceneController implements Initializable{
 					+ " moins chère que d'autres techniques d'imagerie plus sophistiquées comme la microscopie à balayage ou \n"
 					+ "la technologie laser. Les images ont été enregistrées sur des plaques KODAK à rayons X de 13x18 cm. \n"
 					+ "Des études ont été menées à l'aide de grains de blé récoltés à la moissonneuse-batteuse provenant de champs expérimentaux,\n"
-					+ " explorés à l'Institut d'agrophysique de l'Académie polonaise des sciences à Lublin.\n");
+					+ " explorés à l'Institut d'agrophysique de l'Académie polonaise des sciences à Lublin.\n\n");
 			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("Liste des attributs\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
-			descTextArea.appendText("Attribut 1: zone A\n");
-			descTextArea.appendText("Attribut 2: périmètre P\n");
-			descTextArea.appendText("Attribut 3: compacité c\n");
-			descTextArea.appendText("Attribut 4: longueur du noyau\n");
-			descTextArea.appendText("Attribut 5: largeur du noyau\n");
-			descTextArea.appendText("Attribut 6: coefficient d'asymétrie\n");
-			descTextArea.appendText("Attribut 7: longueur de la rainure du noyau\n");
+			descTextArea.appendText("Attribut 1: zone A \t\t\t\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 2: périmètre P \t\t\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 3: compacité c\t\t\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 4: longueur du noyau\t\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 5: largeur du noyau\t\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 6: coefficient d'asymétrie\t\t\t|\t\tTYPE:Numérique-Quantitatif\n");
+			descTextArea.appendText("Attribut 7: longueur de la rainure du noyau\t|\t\tTYPE:Numérique-Quantitatif\n\n");
 			descTextArea.appendText("###############################################################################\n");
-			descTextArea.appendText("Nombre d'instances = "+ indDataset.size()+"\n");
+			descTextArea.appendText("#Nombre d'instances = 210\n");
 			descTextArea.appendText("###############################################################################\n");
-			descTextArea.appendText("Données manquantes = 0\n");
-			descTextArea.appendText("###############################################################################\n");
+			descTextArea.appendText("#Données manquantes = 0\n");
 
 			ManipData manip = new ManipData();
 			manip.setData(manip.indDataToArrayData(indDataset));
 			ArrayList<ArrayList<String>> dict = manip.DataDesc();
 			for(ArrayList<String> item: dict){
-				descTextArea.appendText("----------------------------------------------------------------------------\n");
+				descTextArea.appendText("###############################################################################\n");
 				for(String line:item){
 					descTextArea.appendText(line+"\n");
 				}
 			}
-			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("###############################################################################\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
 			descTextArea.appendText("\nVeuillez charger le data set pour avoir plus d'informations!\n\n");
 			descTextArea.appendText("----------------------------------------------------------------------------\n");
-			descTextArea.appendText("----------------------------------------------------------------------------\n");
+			descTextArea.appendText("###############################################################################\n");
 		}
 	}
 
