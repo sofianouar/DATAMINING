@@ -50,8 +50,8 @@ public class main {
 		
 		// NORMALISATION 
 		//System.out.print("\n avant normalisation : " + manip.GetAttribute(choice) + "\n");
-		System.out.print("\n normalisation min max: " + metrics.NormMinMax() + "\n");
-		System.out.print("\n normalisation z score : " + metrics.NormZscore() + "\n");
+		System.out.print("\n normalisation min max: " + metrics.NormMinMax(choice) + "\n");
+		System.out.print("\n normalisation z score : " + metrics.NormZscore(choice) + "\n");
 
 		//DISCRETIZATION
 

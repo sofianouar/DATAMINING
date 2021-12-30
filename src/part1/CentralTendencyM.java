@@ -341,28 +341,32 @@ public class CentralTendencyM {
 		return res;
 	}
 
-	public ArrayList<Double> NormMinMax() {
-
+	public ArrayList<Double> NormMinMax(int index) {
+		ArrayList<Double> att = new ArrayList<>();
+		ManipData m= new ManipData();
+		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
 
 		double val = 0;
-		for (int i = 0; i < this.attribute.size(); i++) {
-			val = (this.attribute.get(i) - this.GetQ0()) / (this.GetQ4() - this.GetQ0());
+		for (int i = 0; i < att.size(); i++) {
+			val = (att.get(i) - this.GetQ0()) / (this.GetQ4() - this.GetQ0());
 			attNorm.add(Math.round(val * 1e3) / 1e3);
 		}
 		return attNorm;
 	}
 
-	public ArrayList<Double> NormZscore() {
-
+	public ArrayList<Double> NormZscore(int index) {
+		ArrayList<Double> att = new ArrayList<>();
+		ManipData m= new ManipData();
+		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
 
 		double val = 0;
 		double et = this.GetEcartType();
 		double moy = this.GetMean();
 
-		for (int i = 0; i < this.attribute.size(); i++) {
-			val = (this.attribute.get(i) - moy) / et;
+		for (int i = 0; i < att.size(); i++) {
+			val = (att.get(i) - moy) / et;
 			attNorm.add(Math.round(val * 1e3) / 1e3);
 		}
 		return attNorm;
