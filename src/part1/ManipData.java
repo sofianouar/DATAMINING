@@ -79,7 +79,7 @@ public class ManipData {
 		}
 
 		// printing list
-		System.out.print(dataset);
+		//System.out.print(dataset);
 		this.setData(dataset);
 		return dataset;
 	}
@@ -165,6 +165,11 @@ public class ManipData {
 		}
 		return attribute;
 	}
+	
+	public ArrayList<Double> GetAttributeNorm(int index) {
+		return this.data.get(index);
+	}
+	
 
 	// returns all values of att1 and att2 in an arrayList<arrayList> (index
 	// 0=att1,index1=att2)

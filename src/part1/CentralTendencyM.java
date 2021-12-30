@@ -8,11 +8,14 @@ import java.util.List;
 public class CentralTendencyM {
 	public ArrayList<Double> attribute;
 	public ArrayList<ArrayList<Double>> dataset;
-
+	public ArrayList<ArrayList<Double>> datasetZScore;
+	public ArrayList<ArrayList<Double>> datasetMinMax;
 	/*
 	 * constructors
 	 */
 	public CentralTendencyM() {
+		datasetMinMax = new ArrayList<ArrayList<Double>>();
+		datasetZScore = new ArrayList<ArrayList<Double>>();
 	}
 
 	public CentralTendencyM(ArrayList<Double> data) {
@@ -344,6 +347,7 @@ public class CentralTendencyM {
 	public ArrayList<Double> NormMinMax(int index) {
 		ArrayList<Double> att = new ArrayList<>();
 		ManipData m= new ManipData();
+		m.setData(this.dataset);
 		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
 		
@@ -358,6 +362,7 @@ public class CentralTendencyM {
 	public ArrayList<Double> NormZscore(int index) {
 		ArrayList<Double> att = new ArrayList<>();
 		ManipData m= new ManipData();
+		m.setData(this.dataset);
 		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
 		this.attribute=att;
@@ -372,44 +377,66 @@ public class CentralTendencyM {
 		return attNorm;
 	}
 
-	public ArrayList<ArrayList<Double>> Discret() {
 
-		ArrayList<ArrayList<Double>> intervalles = new ArrayList<>();
-		ArrayList<Double> tmp;
-
-		int q = 4;
-		double largeur = Math.round(((this.GetQ4() - this.GetQ0()) / q) * 1e4) / 1e4;
-		System.out.println("min value : " + this.GetQ0() + ", max value : " + this.GetQ4());
-
-		System.out.println("nombre de valeurs : " + this.attribute.size());
-		System.out.println("largeur de chaque intervalle " + largeur);
-		double minv = this.GetQ0();
-		double maxv = Math.round((minv + largeur) * 1e4) / 1e4;
-		int i = 0;
-
-		while (i < q) {
-
-			System.out.println("intervalle " + (i + 1) + " : [" + minv + " - " + maxv + "[");
-
-			tmp = new ArrayList<>();
-			for (int j = 0; j < this.attribute.size(); j++) {
-				if ((this.attribute.get(j) >= minv) & (this.attribute.get(j) < maxv)) {
-
-					tmp.add(this.attribute.get(j));
-				}
-			}
-			if (i == q - 1)
-				tmp.add(maxv);
-			intervalles.add(tmp);
-
-			minv = maxv;
-			maxv = Math.round((minv + largeur) * 1e4) / 1e4;
-			;
-
-			i++;
+	// FINAL MIN-MAX NORMALIZATION
+	public ArrayList<ArrayList<Double>> finalNormMinMax(ArrayList<ArrayList<Double>> dataset) {
+		ArrayList<ArrayList<Double>> final_result = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> atr = new ArrayList<Double>();
+		for (int i = 0; i <= 6; i++) {
+			atr = new ArrayList<Double>();
+			atr = this.NormMinMax(i);
+			final_result.add(atr);
 		}
-
-		return intervalles;
+		return final_result;
 	}
+	// FINAL ZSCORE NORMALIZATION
+	public ArrayList<ArrayList<Double>> finalZSCoreNorm(ArrayList<ArrayList<Double>> dataset) {
+		ArrayList<ArrayList<Double>> final_result = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> atr = new ArrayList<Double>();
+		for (int i = 0; i <= 6; i++) {
+			atr = new ArrayList<Double>();
+			atr = this.NormZscore(i);
+			final_result.add(atr);
+		}
+		return final_result;
+	}
+
+	public void setDatasetZScore(int norm){
+		if(norm == 1){
+			this.datasetMinMax = this.finalNormMinMax(this.dataset);
+		}else if(norm == 2){
+			this.datasetZScore = this.finalZSCoreNorm(this.dataset);
+		}else{
+			System.out.println("Erreur");
+		}
+	}
+
+	// THIS FUNCTION WILL DIVIDE OUR ATTRIBUTE TO INTERVALS THAT CONTAIN THE SAME NUMBER OF ELTS
+	public ArrayList<ArrayList<Double>> atr2interv(ArrayList<Double> underscore_atr, float Q){
+		ArrayList<ArrayList<Double>> final_result = new ArrayList<ArrayList<Double>>();
+		int current_q = 0;
+		ArrayList<Double> atr = new ArrayList<Double>(underscore_atr);
+		Collections.sort(atr);
+		System.out.println("test dakhel atr2interv=" + underscore_atr);
+		// CREATE THE QUANTILES
+		// CREATE THE FIRST QUANTILE
+		ArrayList<Double> interv = new ArrayList<Double>();
+		interv.add(atr.get(0));
+		float a = (float) (1 / Q);
+		interv.add(atr.get( (int) (a *atr.size())-1));
+		final_result.add(interv);
+		for(int i = 1; i<=Q-1; i++){
+			a = (float) (i/Q);
+			interv = new ArrayList<Double>();
+			interv.add(atr.get( (int) (a *atr.size())-1));
+			a = (float) ((i+1)/Q);
+			interv.add(atr.get( (int) (a *atr.size())-1));
+			final_result.add(interv);
+		}
+		System.out.println("kmlt "+final_result);
+		return final_result;
+	}
+
+
 
 }

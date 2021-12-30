@@ -12,14 +12,14 @@ public class main {
 		/*
 		 * ####1 : READING DATA
 		 */
-		System.out.println("Reading dataset ...");
+		//System.out.println("Reading dataset ...");
 
 		ManipData manip = new ManipData();
 		String path = "ressources/seeds_dataset.txt";
 		ArrayList<ArrayList<Double>> dataset = new ArrayList<>();
 		dataset = manip.OpenTxtFile(path);
 		//manip.setData(dataset);
-		System.out.println("\nReading Ends\n");
+		//System.out.println("\nReading Ends\n");
 		
 		/*
 		 * ####2 : Mnipulating Data
@@ -34,6 +34,7 @@ public class main {
 		/*
 		 * ####3 : Calculating Central Tendency Metrics
 		 */
+		/*
 		System.out.println("\nCalculating Central Tendency Metrics\n");
 		System.out.print("\n Normalization : ");
 
@@ -43,15 +44,16 @@ public class main {
 				+ "7. length of kernel groove. \n    your choice : ");
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
-
+		*/
+		int choice=0;
 		CentralTendencyM metrics = new CentralTendencyM();
 		metrics.setDataset(dataset);
 		metrics.setAttribute(manip.GetAttribute(choice));
 		
 		// NORMALISATION 
 		//System.out.print("\n avant normalisation : " + manip.GetAttribute(choice) + "\n");
-		System.out.print("\n normalisation min max: " + metrics.NormMinMax(choice) + "\n");
-		System.out.print("\n normalisation z score : " + metrics.NormZscore(choice) + "\n");
+		//System.out.print("\n normalisation min max: " + metrics.NormMinMax() + "\n");
+		//System.out.print("\n normalisation z score : " + metrics.NormZscore(0) + "\n");
 
 		//DISCRETIZATION
 
@@ -79,6 +81,17 @@ public class main {
 		System.out.print("correlation  : " + metrics.GetCorrelation(1, 2) + "\n");
 		System.out.print("correlation  : " + metrics.GetCorrelation(1, 3) + "\n");
 		*/
+		int ch = 2;
+		metrics.setDatasetZScore(ch);
+		ManipData manip_zcore = new ManipData();
+		ManipData manip_min_max = new ManipData();
+		if(ch == 2){
+			manip_zcore.setData(metrics.datasetZScore);			
+		}else if(ch == 1){
+			manip_zcore.setData(metrics.datasetMinMax);
+		}
+		System.out.println("test getAtt"+manip_zcore.GetAttributeNorm(0));
+		metrics.atr2interv(manip_zcore.GetAttributeNorm(0), 5);
 		System.out.print("\n##END## ");
 
 	}
