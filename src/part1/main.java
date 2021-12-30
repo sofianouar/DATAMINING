@@ -3,6 +3,7 @@ package part1;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class main {
@@ -23,17 +24,19 @@ public class main {
 		/*
 		 * ####2 : Mnipulating Data
 		 */
-
+/*
 		ArrayList<Double> tmp = new ArrayList<>();
 		tmp.addAll(Arrays.asList(1.1,100.2,3.0,4.1,5.3,6.5,7.7,8.8));
 		dataset=manip.addData(tmp);
-		
+*/		
 		
 		
 		/*
 		 * ####3 : Calculating Central Tendency Metrics
 		 */
 		System.out.println("\nCalculating Central Tendency Metrics\n");
+		System.out.print("\n Normalization : ");
+
 		System.out.print("\nChoose an attribute : \n");
 		System.out.print("1. area A,\r\n" + "2. perimeter P,\r\n" + "3. compactness C = 4*pi*A/P^2,\r\n"
 				+ "4. length of kernel,\r\n" + "5. width of kernel,\r\n" + "6. asymmetry coefficient\r\n"
@@ -44,6 +47,16 @@ public class main {
 		CentralTendencyM metrics = new CentralTendencyM();
 		metrics.setDataset(dataset);
 		metrics.setAttribute(manip.GetAttribute(choice));
+		
+		// NORMALISATION 
+		//System.out.print("\n avant normalisation : " + manip.GetAttribute(choice) + "\n");
+		System.out.print("\n normalisation min max: " + metrics.NormMinMax() + "\n");
+		System.out.print("\n normalisation z score : " + metrics.NormZscore() + "\n");
+
+		//DISCRETIZATION
+
+
+		/*
 		System.out.print("Median : " + metrics.GetMedian() + "\n");
 		System.out.print("Mode : " +metrics.GetMode()+"\n");
 		System.out.print("Mean : " + metrics.GetMean() + "\n");
@@ -65,7 +78,7 @@ public class main {
 		System.out.print("covar  : " + metrics.GetCoVariance(1, 2) + "\n");
 		System.out.print("correlation  : " + metrics.GetCorrelation(1, 2) + "\n");
 		System.out.print("correlation  : " + metrics.GetCorrelation(1, 3) + "\n");
-
+		*/
 		System.out.print("\n##END## ");
 
 	}
