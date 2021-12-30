@@ -10,6 +10,7 @@ public class CentralTendencyM {
 	public ArrayList<ArrayList<Double>> dataset;
 	public ArrayList<ArrayList<Double>> datasetZScore;
 	public ArrayList<ArrayList<Double>> datasetMinMax;
+
 	/*
 	 * constructors
 	 */
@@ -346,11 +347,11 @@ public class CentralTendencyM {
 
 	public ArrayList<Double> NormMinMax(int index) {
 		ArrayList<Double> att = new ArrayList<>();
-		ManipData m= new ManipData();
+		ManipData m = new ManipData();
 		m.setData(this.dataset);
-		att=m.GetAttribute(index);
+		att = m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
-		
+
 		double val = 0;
 		for (int i = 0; i < att.size(); i++) {
 			val = (att.get(i) - Collections.min(att)) / (Collections.max(att) - Collections.min(att));
@@ -361,11 +362,11 @@ public class CentralTendencyM {
 
 	public ArrayList<Double> NormZscore(int index) {
 		ArrayList<Double> att = new ArrayList<>();
-		ManipData m= new ManipData();
+		ManipData m = new ManipData();
 		m.setData(this.dataset);
-		att=m.GetAttribute(index);
+		att = m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
-		this.attribute=att;
+		this.attribute = att;
 		double val = 0;
 		double et = this.GetEcartType();
 		double moy = this.GetMean();
@@ -376,7 +377,6 @@ public class CentralTendencyM {
 		}
 		return attNorm;
 	}
-
 
 	// FINAL MIN-MAX NORMALIZATION
 	public ArrayList<ArrayList<Double>> finalNormMinMax(ArrayList<ArrayList<Double>> dataset) {
@@ -389,6 +389,7 @@ public class CentralTendencyM {
 		}
 		return final_result;
 	}
+
 	// FINAL ZSCORE NORMALIZATION
 	public ArrayList<ArrayList<Double>> finalZSCoreNorm(ArrayList<ArrayList<Double>> dataset) {
 		ArrayList<ArrayList<Double>> final_result = new ArrayList<ArrayList<Double>>();
@@ -401,18 +402,19 @@ public class CentralTendencyM {
 		return final_result;
 	}
 
-	public void setDatasetZScore(int norm){
-		if(norm == 1){
+	public void setDatasetZScore(int norm) {
+		if (norm == 1) {
 			this.datasetMinMax = this.finalNormMinMax(this.dataset);
-		}else if(norm == 2){
+		} else if (norm == 2) {
 			this.datasetZScore = this.finalZSCoreNorm(this.dataset);
-		}else{
+		} else {
 			System.out.println("Erreur");
 		}
 	}
 
-	// THIS FUNCTION WILL DIVIDE OUR ATTRIBUTE TO INTERVALS THAT CONTAIN THE SAME NUMBER OF ELTS
-	public ArrayList<ArrayList<Double>> atr2interv(ArrayList<Double> underscore_atr, float Q){
+	// THIS FUNCTION WILL DIVIDE OUR ATTRIBUTE TO INTERVALS THAT CONTAIN THE SAME
+	// NUMBER OF ELTS
+	public ArrayList<ArrayList<Double>> atr2interv(ArrayList<Double> underscore_atr, float Q) {
 		ArrayList<ArrayList<Double>> final_result = new ArrayList<ArrayList<Double>>();
 		int current_q = 0;
 		ArrayList<Double> atr = new ArrayList<Double>(underscore_atr);
@@ -423,20 +425,18 @@ public class CentralTendencyM {
 		ArrayList<Double> interv = new ArrayList<Double>();
 		interv.add(atr.get(0));
 		float a = (float) (1 / Q);
-		interv.add(atr.get( (int) (a *atr.size())-1));
+		interv.add(atr.get((int) (a * atr.size()) - 1));
 		final_result.add(interv);
-		for(int i = 1; i<=Q-1; i++){
-			a = (float) (i/Q);
+		for (int i = 1; i <= Q - 1; i++) {
+			a = (float) (i / Q);
 			interv = new ArrayList<Double>();
-			interv.add(atr.get( (int) (a *atr.size())-1));
-			a = (float) ((i+1)/Q);
-			interv.add(atr.get( (int) (a *atr.size())-1));
+			interv.add(atr.get((int) (a * atr.size()) - 1));
+			a = (float) ((i + 1) / Q);
+			interv.add(atr.get((int) (a * atr.size()) - 1));
 			final_result.add(interv);
 		}
-		System.out.println("kmlt "+final_result);
+		System.out.println("kmlt " + final_result);
 		return final_result;
 	}
-
-
 
 }
