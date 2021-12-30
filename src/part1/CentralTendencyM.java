@@ -346,10 +346,10 @@ public class CentralTendencyM {
 		ManipData m= new ManipData();
 		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
-
+		
 		double val = 0;
 		for (int i = 0; i < att.size(); i++) {
-			val = (att.get(i) - this.GetQ0()) / (this.GetQ4() - this.GetQ0());
+			val = (att.get(i) - Collections.min(att)) / (Collections.max(att) - Collections.min(att));
 			attNorm.add(Math.round(val * 1e3) / 1e3);
 		}
 		return attNorm;
@@ -360,7 +360,7 @@ public class CentralTendencyM {
 		ManipData m= new ManipData();
 		att=m.GetAttribute(index);
 		ArrayList<Double> attNorm = new ArrayList<>();
-
+		this.attribute=att;
 		double val = 0;
 		double et = this.GetEcartType();
 		double moy = this.GetMean();
